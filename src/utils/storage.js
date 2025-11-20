@@ -94,6 +94,61 @@ export const getResults = async () => {
     return data;
 };
 
+export const getLeaderboard = async () => {
+    // Fetch all results
+    const { data, error } = await supabase
+        .from('results')
+        .select('*');
+
+    if (error) {
+        console.error('Error fetching leaderboard:', error);
+        return [];
+    }
+
+    // Aggregate scores by student
+    const leaderboard = {};
+    data.forEach(result => {
+        if (!leaderboard[result.student_name]) {
+            leaderboard[result.student_name] = {
+                name: result.student_name,
+                totalScore: 0,
+                missions: 0,
+                sRank: 0
+            };
+        }
+        leaderboard[result.student_name].totalScore += result.score;
+        leaderboard[result.student_name].missions += 1;
+        if (result.rank === 'S') leaderboard[result.student_name].sRank += 1;
+    });
+
+    // Convert to array and sort by total score
+    return Object.values(leaderboard).sort((a, b) => b.totalScore - a.totalScore);
+};
+
+export const updateAvatar = async (username, avatarId) => {
+    // In a real app with a proper users table schema update, we would update the user row.
+    // For now, since we might not have an avatar column, we'll just store it in local storage 
+    // or assume the users table has a 'metadata' or 'avatar' column.
+    // Let's try to update the 'users' table assuming we can add a column or it exists.
+    // If not, we will fallback to localStorage for this demo to ensure it works without DB migration scripts.
+
+    // Ideally:
+    /*
+    const { error } = await supabase
+        .from('users')
+        .update({ avatar: avatarId })
+        .eq('username', username);
+    */
+
+    // For this environment where I cannot easily run SQL migrations:
+    localStorage.setItem(`avatar_${username}`, avatarId);
+    return { success: true };
+};
+
+export const getAvatar = (username) => {
+    return localStorage.getItem(`avatar_${username}`) || '🧑‍💻';
+};
+
 export const getUsers = async () => {
     const { data, error } = await supabase
         .from('users')
@@ -105,4 +160,28 @@ export const getUsers = async () => {
         return [];
     }
     return data;
+};
+
+export const updateUser = async (currentUsername, updates) => {
+    // Update in Supabase
+    const { data, error } = await supabase
+        .from('users')
+        .update(updates)
+        .eq('username', currentUsername)
+        .select()
+        .single();
+
+    if (error) {
+        return { success: false, message: error.message };
+    }
+
+    // Update local session if username changed or just to sync
+    const currentUser = getCurrentUser();
+    if (currentUser && currentUser.username === currentUsername) {
+        const updatedUser = { ...currentUser, ...data };
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
+        return { success: true, user: updatedUser };
+    }
+
+    return { success: true, user: { ...data, role: 'student' } };
 };

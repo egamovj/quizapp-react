@@ -1,6 +1,9 @@
 import React from 'react';
+import { getAvatar } from '../utils/storage';
 
-const Welcome = ({ onStart, user }) => {
+const Welcome = ({ onStart, user, onProfile, onLeaderboard, onStudy }) => {
+    const avatar = user ? getAvatar(user.username) : '🧑‍💻';
+
     return (
         <div className="dashboard-panel welcome-panel">
             <div className="panel-header">
@@ -27,9 +30,32 @@ const Welcome = ({ onStart, user }) => {
 
                 <div className="character-select">
                     <div className="avatar-frame">
-                        <span className="avatar">🧑‍💻</span>
+                        <span className="avatar">{avatar}</span>
                     </div>
                     <p>AGENT: {user ? user.name.toUpperCase() : 'YOU'}</p>
+                    <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                        <button
+                            onClick={onProfile}
+                            className="cyber-btn small"
+                            style={{ fontSize: '0.7rem', padding: '5px 10px', minWidth: 'auto' }}
+                        >
+                            PROFILE
+                        </button>
+                        <button
+                            onClick={onLeaderboard}
+                            className="cyber-btn small"
+                            style={{ fontSize: '0.7rem', padding: '5px 10px', minWidth: 'auto', borderColor: 'gold', color: 'gold' }}
+                        >
+                            RANKINGS
+                        </button>
+                        <button
+                            onClick={onStudy}
+                            className="cyber-btn small"
+                            style={{ fontSize: '0.7rem', padding: '5px 10px', minWidth: 'auto', borderColor: 'var(--secondary)', color: 'var(--secondary)' }}
+                        >
+                            DATA BANK
+                        </button>
+                    </div>
                 </div>
             </div>
 

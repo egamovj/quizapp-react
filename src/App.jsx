@@ -5,12 +5,15 @@ import Result from './components/Result';
 import Auth from './components/Auth';
 import AdminDashboard from './components/AdminDashboard';
 import LandingPage from './components/LandingPage';
+import Leaderboard from './components/Leaderboard';
+import StudentProfile from './components/StudentProfile';
+import StudyGuide from './components/StudyGuide';
 import { getCurrentUser, logoutUser, saveResult } from './utils/storage';
 import { questions } from './data/questions';
 
 function App() {
   const [user, setUser] = useState(null);
-  const [gameState, setGameState] = useState('welcome'); // welcome, quiz, result
+  const [gameState, setGameState] = useState('welcome');
   const [score, setScore] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
@@ -114,7 +117,15 @@ function App() {
         <button className="cyber-btn small" onClick={handleLogout} style={{ padding: '5px 10px', fontSize: '0.8rem' }}>LOGOUT</button>
       </div>
 
-      {gameState === 'welcome' && <Welcome onStart={startQuiz} user={user} />}
+      {gameState === 'welcome' && (
+        <Welcome
+          onStart={startQuiz}
+          user={user}
+          onLeaderboard={() => setGameState('leaderboard')}
+          onProfile={() => setGameState('profile')}
+          onStudy={() => setGameState('study')}
+        />
+      )}
       {gameState === 'quiz' && (
         <Quiz
           onComplete={finishQuiz}
@@ -130,6 +141,15 @@ function App() {
           onRetry={() => startQuiz(selectedCategory)}
           onHome={goHome}
         />
+      )}
+      {gameState === 'leaderboard' && (
+        <Leaderboard onBack={goHome} />
+      )}
+      {gameState === 'profile' && (
+        <StudentProfile user={user} onBack={goHome} />
+      )}
+      {gameState === 'study' && (
+        <StudyGuide onBack={goHome} />
       )}
     </div>
   );
