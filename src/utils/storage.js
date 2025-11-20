@@ -93,3 +93,16 @@ export const getResults = async () => {
     }
     return data;
 };
+
+export const getUsers = async () => {
+    const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .neq('username', 'admin');
+
+    if (error) {
+        console.error('Error fetching users:', error);
+        return [];
+    }
+    return data;
+};

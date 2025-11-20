@@ -622,3 +622,32 @@ body {
   padding: 5px 15px;
   font-size: 0.9rem;
 }
+
+.student-profile {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+  border-left: 1px solid #333;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  border: 1px solid #000;
+  transition: all 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--primary);
+}
