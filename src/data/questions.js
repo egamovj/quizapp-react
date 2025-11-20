@@ -1,0 +1,132 @@
+export const questions = [
+    {
+        id: 1,
+        question: "HTML kengaytmasi to'g'ri berilgan qatorni toping?",
+        options: [
+            "Hyper Type Multi Language",
+            "Hyper Type Multiple Language",
+            "Hyper Text Markup Language",
+            "Home Text Multi Language"
+        ],
+        answer: "Hyper Text Markup Language",
+    },
+    {
+        id: 2,
+        question: "CSS kengaytmasi to'g'ri berilgan qatorni toping?",
+        options: [
+            "Cascading Style Sheet",
+            "Cute Style Sheet",
+            "Computer Style Sheet",
+            "Codehal Style Sheet",
+        ],
+        answer: "Cascading Style Sheet",
+    },
+    {
+        id: 3,
+        question: "inputga malumotni kiritishni shart qilish uchun qaysi atributdan foydalanamiz?",
+        options: ["disabled", "required", "default", "type"],
+        answer: "required",
+    },
+    {
+        id: 4,
+        question: "HTMLda havola yani link qaysi teg bilan yaratiladi?",
+        options: ["a", "p", "i", "button"],
+        answer: "a",
+    },
+    {
+        id: 5,
+        question: "Qaysi teg yordamida tartibli ro'yhat yaratishimiz mumkin?",
+        options: ["td", "ul", "ol", "tr"],
+        answer: "ol",
+    },
+    {
+        id: 6,
+        question: "link, meta, style va hokazo kabi bosh teglar qaysi teg ichida joylashishi kerak?",
+        options: ["section", "div", "body", "head"],
+        answer: "head",
+    },
+    {
+        id: 7,
+        question: "HTMLda qatorni bitta pastga tushirish uchun qaysi tegdan foydalanamiz?",
+        options: ["hr", "br", "dl", "dt"],
+        answer: "br",
+    },
+    {
+        id: 8,
+        question: "img tegidagi qaysi atribut rasm ko‘rinmasa o‘rniga matn chiqaradi?",
+        options: ["src", "href", "alt", "data"],
+        answer: "alt",
+    },
+    {
+        id: 9,
+        question: "HTMLda text ostiga chizish uchun qaysi tegdan foydalanamiz?",
+        options: ["u", "i", "del", "sup"],
+        answer: "u",
+    },
+    {
+        id: 10,
+        question: "Ko'p qatorli matn kiritish maydoni qaysi teg?",
+        options: ["div", "input", "placeholder", "textarea"],
+        answer: "textarea",
+    },
+    {
+        id: 11,
+        question: "Uzuk chiziqli border qanday yoziladi?",
+        options: ["dashed", "solid", "dotted", "textarea"],
+        answer: "dashed",
+    },
+    {
+        id: 12,
+        question: "Quyidagilardan qaysi biri selector bo'la olmaydi?",
+        options: [".title", "h1", "$h1", "#title"],
+        answer: "$h1",
+    },
+    {
+        id: 13,
+        question: "Nuqtali border qanday yoziladi?",
+        options: ["groove", "solid", "dashed", "dotted"],
+        answer: "dotted",
+    },
+    {
+        id: 14,
+        question: "RGB ranglarini qaysi sonlar orqali berishimiz mumkin?",
+        options: ["0-256", "0-255", "0-188", "1-200"],
+        answer: "0-255",
+    },
+    {
+        id: 15,
+        question: "Matnni katta-kichik qilish uchun qaysi xossa ishlatiladi?",
+        options: ["font-weight", "font-style", "font-size", "line-height"],
+        answer: "font-size",
+    },
+    {
+        id: 16,
+        question: "Sahifaga rasm joylash uchun qaysi tegdan foydalaniladi?",
+        options: ["pic", "img", "gif", "src"],
+        answer: "img",
+    },
+    {
+        id: 17,
+        question: "CSS ni necha xil yo'l bilan HTMLga ulash mumkin?",
+        options: ["3", "4", "2", "1"],
+        answer: "3",
+    },
+    {
+        id: 18,
+        question: "Elementga soya qo'shish uchun qaysi xossa ishlatiladi?",
+        options: ["box-shadow", "text-shadow", "border-shadow", "shadow"],
+        answer: "box-shadow",
+    },
+    {
+        id: 19,
+        question: "Matnni qalin qilish uchun qaysi semantik teg ishlatiladi?",
+        options: ["sup", "mark", "strong", "em"],
+        answer: "strong",
+    },
+    {
+        id: 20,
+        question: "Elementning chekkalarini yumaloqlash uchun qaysi xossa?",
+        options: ["border-line", "border-radius", "round-border", "curve-border"],
+        answer: "border-radius",
+    },
+];
