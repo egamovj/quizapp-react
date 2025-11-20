@@ -5,7 +5,11 @@ const AdminDashboard = ({ onLogout }) => {
     const [results, setResults] = useState([]);
 
     useEffect(() => {
-        setResults(getResults());
+        const fetchResults = async () => {
+            const data = await getResults();
+            setResults(data);
+        };
+        fetchResults();
     }, []);
 
     const handleLogout = () => {
@@ -42,12 +46,12 @@ const AdminDashboard = ({ onLogout }) => {
                             ) : (
                                 results.map((res, index) => (
                                     <tr key={index}>
-                                        <td>{res.studentName}</td>
+                                        <td>{res.student_name}</td>
                                         <td className="highlight">{res.score}/{res.total}</td>
                                         <td>
                                             <span className={`rank-tag rank-${res.rank}`}>{res.rank}</span>
                                         </td>
-                                        <td>{new Date(res.date).toLocaleString()}</td>
+                                        <td>{new Date(res.created_at).toLocaleString()}</td>
                                     </tr>
                                 ))
                             )}

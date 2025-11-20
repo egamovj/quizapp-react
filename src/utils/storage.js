@@ -1,56 +1,95 @@
-const USERS_KEY = 'quiz_users';
-const RESULTS_KEY = 'quiz_results';
+import { supabase } from './supabase';
+
 const CURRENT_USER_KEY = 'quiz_current_user';
 
-// Initialize storage if empty
-if (!localStorage.getItem(USERS_KEY)) {
-    localStorage.setItem(USERS_KEY, JSON.stringify([
-        { username: 'admin', password: '123', role: 'admin', name: 'Admin User' }
-    ]));
-}
-if (!localStorage.getItem(RESULTS_KEY)) {
-    localStorage.setItem(RESULTS_KEY, JSON.stringify([]));
-}
-
-export const loginUser = (username, password) => {
-    const users = JSON.parse(localStorage.getItem(USERS_KEY));
-    const user = users.find(u => u.username === username && u.password === password);
-    if (user) {
-        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-        return { success: true, user };
-    }
-    return { success: false, message: 'Invalid credentials' };
-};
-
-export const registerUser = (name, username, password) => {
-    const users = JSON.parse(localStorage.getItem(USERS_KEY));
-    if (users.find(u => u.username === username)) {
-        return { success: false, message: 'Username already exists' };
-    }
-    const newUser = { username, password, role: 'student', name };
-    users.push(newUser);
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
-    return { success: true, user: newUser };
+// Keep user session in localStorage for persistence across reloads
+export const getCurrentUser = () => {
+    return JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
 };
 
 export const logoutUser = () => {
     localStorage.removeItem(CURRENT_USER_KEY);
 };
 
-export const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
+// --- Async Supabase Functions ---
+
+export const loginUser = async (username, password) => {
+    // For simplicity, we will still use a hardcoded admin check
+    // But for students, we will check the 'users' table in Supabase
+
+    if (username === 'admin' && password === '123') {
+        const adminUser = { username: 'admin', role: 'admin', name: 'Admin User' };
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(adminUser));
+        return { success: true, user: adminUser };
+    }
+
+    // Check Supabase for student
+    const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('username', username)
+        .eq('password', password)
+        .single();
+
+    if (error || !data) {
+        return { success: false, message: 'Invalid credentials' };
+    }
+
+    const user = { ...data, role: 'student' };
+    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+    return { success: true, user };
 };
 
-export const saveResult = (result) => {
-    const results = JSON.parse(localStorage.getItem(RESULTS_KEY));
-    results.push({
-        ...result,
-        date: new Date().toISOString()
-    });
-    localStorage.setItem(RESULTS_KEY, JSON.stringify(results));
+export const registerUser = async (name, username, password) => {
+    // Check if user exists
+    const { data: existing } = await supabase
+        .from('users')
+        .select('username')
+        .eq('username', username)
+        .single();
+
+    if (existing) {
+        return { success: false, message: 'Username already exists' };
+    }
+
+    // Insert new user
+    const { data, error } = await supabase
+        .from('users')
+        .insert([{ name, username, password }])
+        .select()
+        .single();
+
+    if (error) {
+        return { success: false, message: 'Registration failed: ' + error.message };
+    }
+
+    const newUser = { ...data, role: 'student' };
+    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
+    return { success: true, user: newUser };
 };
 
-export const getResults = () => {
-    return JSON.parse(localStorage.getItem(RESULTS_KEY));
+export const saveResult = async (result) => {
+    const { error } = await supabase
+        .from('results')
+        .insert([{
+            student_name: result.studentName,
+            score: result.score,
+            total: result.total,
+            rank: result.rank
+        }]);
+
+    if (error) console.error('Error saving result:', error);
+};
+
+export const getResults = async () => {
+    const { data, error } = await supabase
+        .from('results')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error('Error fetching results:', error);
+        return [];
+    }
+    return data;
 };

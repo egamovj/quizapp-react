@@ -10,12 +10,12 @@ const Auth = ({ onLogin }) => {
     });
     const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
         if (isLogin) {
-            const res = loginUser(formData.username, formData.password);
+            const res = await loginUser(formData.username, formData.password);
             if (res.success) {
                 onLogin(res.user);
             } else {
@@ -26,7 +26,7 @@ const Auth = ({ onLogin }) => {
                 setError('All fields are required');
                 return;
             }
-            const res = registerUser(formData.name, formData.username, formData.password);
+            const res = await registerUser(formData.name, formData.username, formData.password);
             if (res.success) {
                 onLogin(res.user);
             } else {
