@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Welcome = ({ onStart }) => {
+const Welcome = ({ onStart, user }) => {
     return (
         <div className="dashboard-panel welcome-panel">
             <div className="panel-header">
@@ -27,9 +27,9 @@ const Welcome = ({ onStart }) => {
 
                 <div className="character-select">
                     <div className="avatar-frame">
-                        <span className="avatar">🧑‍</span>
+                        <span className="avatar">🧑‍💻</span>
                     </div>
-                    <p>AGENT: YOU</p>
+                    <p>AGENT: {user ? user.name.toUpperCase() : 'YOU'}</p>
                 </div>
             </div>
 

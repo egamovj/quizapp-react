@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { loginUser, registerUser } from '../utils/storage';
 
-const Auth = ({ onLogin }) => {
-    const [isLogin, setIsLogin] = useState(true);
+const Auth = ({ onLogin, initialMode = 'login', onBack }) => {
+    const [isLogin, setIsLogin] = useState(initialMode === 'login');
     const [formData, setFormData] = useState({
         name: '',
         username: '',
         password: ''
     });
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        setIsLogin(initialMode === 'login');
+    }, [initialMode]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,6 +44,21 @@ const Auth = ({ onLogin }) => {
             <div className="panel-header">
                 <span className="status-blink">🔒 ACCESS CONTROL</span>
                 <span className="panel-id">AUTH_PROTOCOL_V1</span>
+                {onBack && (
+                    <button
+                        onClick={onBack}
+                        style={{
+                            background: 'none',
+                            border: 'none',
+                            color: 'var(--text-dim)',
+                            cursor: 'pointer',
+                            marginLeft: 'auto',
+                            fontSize: '0.8rem'
+                        }}
+                    >
+                        [X] CANCEL
+                    </button>
+                )}
             </div>
 
             <div className="auth-content">

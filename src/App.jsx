@@ -4,6 +4,7 @@ import Quiz from './components/Quiz';
 import Result from './components/Result';
 import Auth from './components/Auth';
 import AdminDashboard from './components/AdminDashboard';
+import LandingPage from './components/LandingPage';
 import { getCurrentUser, logoutUser, saveResult } from './utils/storage';
 import { questions } from './data/questions';
 
@@ -14,6 +15,8 @@ function App() {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [showAuth, setShowAuth] = useState(false);
+  const [authMode, setAuthMode] = useState('login');
 
   useEffect(() => {
     const currentUser = getCurrentUser();
@@ -25,6 +28,7 @@ function App() {
   const handleLogin = (loggedInUser) => {
     setUser(loggedInUser);
     setGameState('welcome');
+    setShowAuth(false);
   };
 
   const handleLogout = () => {
@@ -32,6 +36,7 @@ function App() {
     setUser(null);
     setGameState('welcome');
     setSelectedCategory(null);
+    setShowAuth(false);
   };
 
   const startQuiz = (category) => {
@@ -73,9 +78,23 @@ function App() {
   };
 
   if (!user) {
+    if (showAuth) {
+      return (
+        <div className="App">
+          <Auth
+            onLogin={handleLogin}
+            initialMode={authMode}
+            onBack={() => setShowAuth(false)}
+          />
+        </div>
+      );
+    }
     return (
       <div className="App">
-        <Auth onLogin={handleLogin} />
+        <LandingPage
+          onLogin={() => { setAuthMode('login'); setShowAuth(true); }}
+          onRegister={() => { setAuthMode('register'); setShowAuth(true); }}
+        />
       </div>
     );
   }
@@ -95,7 +114,7 @@ function App() {
         <button className="cyber-btn small" onClick={handleLogout} style={{ padding: '5px 10px', fontSize: '0.8rem' }}>LOGOUT</button>
       </div>
 
-      {gameState === 'welcome' && <Welcome onStart={startQuiz} />}
+      {gameState === 'welcome' && <Welcome onStart={startQuiz} user={user} />}
       {gameState === 'quiz' && (
         <Quiz
           onComplete={finishQuiz}
