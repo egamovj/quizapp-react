@@ -1,7 +1,7 @@
 import React from 'react';
 import { getAvatar } from '../utils/storage';
 
-const Welcome = ({ onStart, user, onProfile, onLeaderboard, onStudy }) => {
+const Welcome = ({ onStart, user, onProfile, onLeaderboard, onStudy, onAnalytics, onReview }) => {
     const avatar = user ? getAvatar(user.username) : '🧑‍💻';
 
     return (
@@ -33,7 +33,7 @@ const Welcome = ({ onStart, user, onProfile, onLeaderboard, onStudy }) => {
                         <span className="avatar">{avatar}</span>
                     </div>
                     <p>AGENT: {user ? user.name.toUpperCase() : 'YOU'}</p>
-                    <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', marginTop: '10px', width: '100%', maxWidth: '300px' }}>
                         <button
                             onClick={onProfile}
                             className="cyber-btn small"
@@ -49,11 +49,25 @@ const Welcome = ({ onStart, user, onProfile, onLeaderboard, onStudy }) => {
                             RANKINGS
                         </button>
                         <button
+                            onClick={onAnalytics}
+                            className="cyber-btn small"
+                            style={{ fontSize: '0.7rem', padding: '5px 10px', minWidth: 'auto', borderColor: '#ff00ff', color: '#ff00ff' }}
+                        >
+                            ANALYTICS
+                        </button>
+                        <button
                             onClick={onStudy}
                             className="cyber-btn small"
                             style={{ fontSize: '0.7rem', padding: '5px 10px', minWidth: 'auto', borderColor: 'var(--secondary)', color: 'var(--secondary)' }}
                         >
                             DATA BANK
+                        </button>
+                        <button
+                            onClick={onReview}
+                            className="cyber-btn small"
+                            style={{ fontSize: '0.7rem', padding: '5px 10px', minWidth: 'auto', borderColor: 'var(--accent)', color: 'var(--accent)', gridColumn: 'span 2' }}
+                        >
+                            🔍 REVIEW MISTAKES
                         </button>
                     </div>
                 </div>
@@ -65,7 +79,7 @@ const Welcome = ({ onStart, user, onProfile, onLeaderboard, onStudy }) => {
                     <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', color: 'var(--accent)' }}>
                         <input
                             type="checkbox"
-                            onChange={(e) => onStart(null, e.target.checked)} // We'll handle the mode change differently
+                            onChange={(e) => onStart(null, e.target.checked)}
                             style={{ accentColor: 'var(--accent)' }}
                         />
                         <span style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>⚡ SPEEDRUN MODE (15s)</span>

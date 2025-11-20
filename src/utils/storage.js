@@ -75,7 +75,9 @@ export const saveResult = async (result) => {
             student_name: result.studentName,
             score: result.score,
             total: result.total,
-            rank: result.rank
+            rank: result.rank,
+            answers: JSON.stringify(result.answers || []),
+            category: result.category || null
         }]);
 
     if (error) console.error('Error saving result:', error);

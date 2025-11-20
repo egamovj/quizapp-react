@@ -8,12 +8,15 @@ import LandingPage from './components/LandingPage';
 import Leaderboard from './components/Leaderboard';
 import StudentProfile from './components/StudentProfile';
 import StudyGuide from './components/StudyGuide';
+import Analytics from './components/Analytics';
+import Review from './components/Review';
+import Toast from './components/Toast';
 import { getCurrentUser, logoutUser, saveResult } from './utils/storage';
 import { questions } from './data/questions';
 
 function App() {
   const [user, setUser] = useState(null);
-  const [gameState, setGameState] = useState('welcome');
+  const [gameState, setGameState] = useState('welcome'); // welcome, quiz, result, leaderboard, profile, study, analytics, review
   const [score, setScore] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
@@ -21,6 +24,9 @@ function App() {
   const [showAuth, setShowAuth] = useState(false);
   const [authMode, setAuthMode] = useState('login');
   const [isSpeedrun, setIsSpeedrun] = useState(false);
+  const [toast, setToast] = useState(null);
+  const [keyBuffer, setKeyBuffer] = useState('');
+  const [reviewQuestions, setReviewQuestions] = useState([]);
 
   useEffect(() => {
     const currentUser = getCurrentUser();
@@ -28,6 +34,43 @@ function App() {
       setUser(currentUser);
     }
   }, []);
+
+  // Cheat code detection
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      const newBuffer = (keyBuffer + e.key).toLowerCase().slice(-20);
+      setKeyBuffer(newBuffer);
+
+      // Check for cheat codes
+      const cheats = {
+        'iddqd': () => {
+          setToast({ message: '🔓 ALL AVATARS UNLOCKED!', type: 'secret' });
+          localStorage.setItem('cheat_avatars', 'true');
+        },
+        'hesoyam': () => {
+          setToast({ message: '💰 +1000 BONUS POINTS!', type: 'secret' });
+          localStorage.setItem('cheat_bonus', (parseInt(localStorage.getItem('cheat_bonus') || '0') + 1000).toString());
+        },
+        'poweroverwhelming': () => {
+          setToast({ message: '⚡ INFINITE TIME ACTIVATED!', type: 'secret' });
+          localStorage.setItem('cheat_infinite_time', 'true');
+        },
+        'theresnomovie': () => {
+          setToast({ message: '🎬 SKIP TO END ENABLED!', type: 'secret' });
+        }
+      };
+
+      Object.keys(cheats).forEach(code => {
+        if (newBuffer.includes(code.replace(' ', ''))) {
+          cheats[code]();
+          setKeyBuffer(''); // Clear buffer after activation
+        }
+      });
+    };
+
+    window.addEventListener('keypress', handleKeyPress);
+    return () => window.removeEventListener('keypress', handleKeyPress);
+  }, [keyBuffer]);
 
   const handleLogin = (loggedInUser) => {
     setUser(loggedInUser);
@@ -56,6 +99,14 @@ function App() {
     setUserAnswers([]);
   };
 
+  const startReviewQuiz = (questionsToReview) => {
+    setReviewQuestions(questionsToReview);
+    setSelectedCategory('review');
+    setGameState('quiz');
+    setScore(0);
+    setUserAnswers([]);
+  };
+
   const finishQuiz = (finalScore, total, answers) => {
     setScore(finalScore);
     setTotalQuestions(total);
@@ -75,7 +126,9 @@ function App() {
         studentName: user.name,
         score: finalScore,
         total: total,
-        rank: rank
+        rank: rank,
+        answers: answers,
+        category: selectedCategory
       });
     }
   };
@@ -132,12 +185,14 @@ function App() {
           onLeaderboard={() => setGameState('leaderboard')}
           onProfile={() => setGameState('profile')}
           onStudy={() => setGameState('study')}
+          onAnalytics={() => setGameState('analytics')}
+          onReview={() => setGameState('review')}
         />
       )}
       {gameState === 'quiz' && (
         <Quiz
           onComplete={finishQuiz}
-          questions={questions[selectedCategory]}
+          questions={selectedCategory === 'review' ? reviewQuestions : questions[selectedCategory]}
           category={selectedCategory}
           isSpeedrun={isSpeedrun}
         />
@@ -160,6 +215,14 @@ function App() {
       {gameState === 'study' && (
         <StudyGuide onBack={goHome} />
       )}
+      {gameState === 'analytics' && (
+        <Analytics user={user} onBack={goHome} />
+      )}
+      {gameState === 'review' && (
+        <Review user={user} onBack={goHome} onStartReview={startReviewQuiz} />
+      )}
+
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>
   );
 }
