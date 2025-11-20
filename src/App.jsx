@@ -5,6 +5,7 @@ import Result from './components/Result';
 import Auth from './components/Auth';
 import AdminDashboard from './components/AdminDashboard';
 import { getCurrentUser, logoutUser, saveResult } from './utils/storage';
+import { questions } from './data/questions';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -12,6 +13,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     const currentUser = getCurrentUser();
@@ -29,9 +31,11 @@ function App() {
     logoutUser();
     setUser(null);
     setGameState('welcome');
+    setSelectedCategory(null);
   };
 
-  const startQuiz = () => {
+  const startQuiz = (category) => {
+    setSelectedCategory(category);
     setGameState('quiz');
     setScore(0);
     setUserAnswers([]);
@@ -65,6 +69,7 @@ function App() {
     setGameState('welcome');
     setScore(0);
     setUserAnswers([]);
+    setSelectedCategory(null);
   };
 
   if (!user) {
@@ -91,13 +96,19 @@ function App() {
       </div>
 
       {gameState === 'welcome' && <Welcome onStart={startQuiz} />}
-      {gameState === 'quiz' && <Quiz onComplete={finishQuiz} />}
+      {gameState === 'quiz' && (
+        <Quiz
+          onComplete={finishQuiz}
+          questions={questions[selectedCategory]}
+          category={selectedCategory}
+        />
+      )}
       {gameState === 'result' && (
         <Result
           score={score}
           total={totalQuestions}
           userAnswers={userAnswers}
-          onRetry={startQuiz}
+          onRetry={() => startQuiz(selectedCategory)}
           onHome={goHome}
         />
       )}

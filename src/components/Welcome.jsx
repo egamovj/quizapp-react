@@ -27,16 +27,29 @@ const Welcome = ({ onStart }) => {
 
                 <div className="character-select">
                     <div className="avatar-frame">
-                        <span className="avatar">🧑‍💻</span>
+                        <span className="avatar">🧑‍</span>
                     </div>
                     <p>AGENT: YOU</p>
                 </div>
             </div>
 
-            <button className="cyber-btn large" onClick={onStart}>
-                <span className="btn-glitch">MISSIYANI BOSHLAMOQ</span>
-                <span className="btn-tag">START</span>
-            </button>
+            <div className="mission-actions" style={{ padding: '0 40px 40px 40px' }}>
+                <p className="label" style={{ color: 'var(--secondary)', marginBottom: '15px' }}>SELECT MISSION PROTOCOL:</p>
+                <div className="category-buttons" style={{ display: 'flex', gap: '20px' }}>
+                    <button className="cyber-btn" onClick={() => onStart('html')}>
+                        HTML
+                        <span className="btn-tag">STRUCTURE</span>
+                    </button>
+                    <button className="cyber-btn" onClick={() => onStart('css')} style={{ borderColor: 'var(--secondary)', color: 'var(--secondary)' }}>
+                        CSS
+                        <span className="btn-tag">STYLE</span>
+                    </button>
+                    <button className="cyber-btn" onClick={() => onStart('js')} style={{ borderColor: 'gold', color: 'gold' }}>
+                        JS
+                        <span className="btn-tag">LOGIC</span>
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };

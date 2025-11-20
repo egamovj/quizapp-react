@@ -1,80 +1,114 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import QuestionCard from './QuestionCard';
-import { questions } from '../data/questions';
 
-const Quiz = ({ onComplete }) => {
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [selectedAnswer, setSelectedAnswer] = useState(null);
-    const [userAnswers, setUserAnswers] = useState([]);
+const Quiz = ({ onComplete, questions, category }) => {
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [score, setScore] = useState(0);
+    const [answers, setAnswers] = useState([]);
+    const [timeLeft, setTimeLeft] = useState(15);
+    const [showFeedback, setShowFeedback] = useState(false);
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [isCorrect, setIsCorrect] = useState(null);
 
-    const currentQuestion = questions[currentQuestionIndex];
+    useEffect(() => {
+        setCurrentQuestion(0);
+        setScore(0);
+        setAnswers([]);
+        setTimeLeft(15);
+        setShowFeedback(false);
+        setSelectedOption(null);
+    }, [category]);
 
-    const handleSelectAnswer = (answer) => {
-        setSelectedAnswer(answer);
-    };
+    useEffect(() => {
+        if (showFeedback) return;
 
-    const handleNextQuestion = () => {
-        const newAnswers = [...userAnswers, {
-            questionId: currentQuestion.id,
-            question: currentQuestion.question,
-            selected: selectedAnswer,
-            correct: currentQuestion.answer,
-            explanation: currentQuestion.explanation,
-            isCorrect: selectedAnswer === currentQuestion.answer
-        }];
-
-        setUserAnswers(newAnswers);
-
-        const nextIndex = currentQuestionIndex + 1;
-        if (nextIndex < questions.length) {
-            setCurrentQuestionIndex(nextIndex);
-            setSelectedAnswer(null);
+        if (timeLeft > 0) {
+            const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+            return () => clearTimeout(timer);
         } else {
-            const finalScore = newAnswers.filter(a => a.isCorrect).length;
-            onComplete(finalScore, questions.length, newAnswers);
+            handleAnswer(null);
         }
+    }, [timeLeft, showFeedback]);
+
+    const handleAnswer = (option) => {
+        const currentQ = questions[currentQuestion];
+        const correct = option === currentQ.answer;
+
+        setSelectedOption(option);
+        setIsCorrect(correct);
+        setShowFeedback(true);
+
+        if (correct) {
+            setScore(score + 1);
+        }
+
+        const newAnswer = {
+            question: currentQ.question,
+            selected: option,
+            correct: currentQ.answer,
+            isCorrect: correct
+        };
+
+        const newAnswers = [...answers, newAnswer];
+        setAnswers(newAnswers);
+
+        // Delay for feedback
+        setTimeout(() => {
+            setShowFeedback(false);
+            setSelectedOption(null);
+            setIsCorrect(null);
+
+            if (currentQuestion + 1 < questions.length) {
+                setCurrentQuestion(currentQuestion + 1);
+                setTimeLeft(15);
+            } else {
+                onComplete(correct ? score + 1 : score, questions.length, newAnswers);
+            }
+        }, 2000);
     };
 
-    const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+    const progress = ((currentQuestion) / questions.length) * 100;
+    const integrity = (timeLeft / 15) * 100;
 
     return (
         <div className="dashboard-panel quiz-panel">
             <div className="panel-header">
                 <span className="status-blink">🟢 SYSTEM ACTIVE</span>
-                <span className="panel-id">SAVOL {currentQuestionIndex + 1}/{questions.length}</span>
+                <span className="panel-id">PROTOCOL: {category ? category.toUpperCase() : 'UNKNOWN'}</span>
+                <span className="timer" style={{ color: timeLeft < 5 ? 'red' : 'var(--primary)' }}>
+                    T-{timeLeft < 10 ? `0${timeLeft}` : timeLeft}
+                </span>
             </div>
 
             <div className="split-layout">
                 <div className="left-col">
                     <div className="question-display">
-                        <span className="label">Savol:</span>
-                        <h2>{currentQuestion.question}</h2>
+                        <span className="label">DATA_PACKET_0{currentQuestion + 1}</span>
+                        <h2>{questions[currentQuestion].question}</h2>
                     </div>
+
                     <div className="system-integrity">
-                        <label></label>
+                        <label style={{ color: 'var(--text-dim)', fontSize: '0.8rem' }}>SYSTEM INTEGRITY (TIME)</label>
                         <div className="integrity-bar">
-                            <div className="fill" style={{ width: `${progress}%` }}></div>
+                            <div className="fill" style={{ width: `${integrity}%`, background: timeLeft < 5 ? 'red' : 'var(--primary)' }}></div>
                         </div>
                     </div>
                 </div>
 
                 <div className="right-col">
                     <QuestionCard
-                        question={currentQuestion}
-                        selectedAnswer={selectedAnswer}
-                        onSelectAnswer={handleSelectAnswer}
+                        options={questions[currentQuestion].options}
+                        onAnswer={handleAnswer}
+                        disabled={showFeedback}
+                        selectedOption={selectedOption}
+                        correctAnswer={questions[currentQuestion].answer}
+                        showResult={showFeedback}
                     />
                 </div>
             </div>
 
-            <div className="panel-footer">
-                <button
-                    className="cyber-btn"
-                    onClick={handleNextQuestion}
-                    disabled={!selectedAnswer}
-                >
-                    {currentQuestionIndex === questions.length - 1 ? "MA'LUMOTNI YUKLASH" : "KEYINGI SAVOL >>"}
-                </button>
+            <div style={{ height: '4px', background: '#333', width: '100%' }}>
+                <div style={{ height: '100%', width: `${progress}%`, background: 'var(--secondary)', transition: 'width 0.3s' }}></div>
             </div>
         </div>
     );
