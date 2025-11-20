@@ -17,7 +17,7 @@ export const loginUser = async (username, password) => {
     // For simplicity, we will still use a hardcoded admin check
     // But for students, we will check the 'users' table in Supabase
 
-    if (username === 'admin' && password === '123') {
+    if (username === 'admin' && password === '8581319') {
         const adminUser = { username: 'admin', role: 'admin', name: 'Admin User' };
         localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(adminUser));
         return { success: true, user: adminUser };
