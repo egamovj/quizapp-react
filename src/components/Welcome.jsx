@@ -60,7 +60,18 @@ const Welcome = ({ onStart, user, onProfile, onLeaderboard, onStudy }) => {
             </div>
 
             <div className="mission-actions" style={{ padding: '0 40px 40px 40px' }}>
-                <p className="label" style={{ color: 'var(--secondary)', marginBottom: '15px' }}>SELECT MISSION PROTOCOL:</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+                    <p className="label" style={{ color: 'var(--secondary)', margin: 0 }}>SELECT MISSION PROTOCOL:</p>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', color: 'var(--accent)' }}>
+                        <input
+                            type="checkbox"
+                            onChange={(e) => onStart(null, e.target.checked)} // We'll handle the mode change differently
+                            style={{ accentColor: 'var(--accent)' }}
+                        />
+                        <span style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>⚡ SPEEDRUN MODE (15s)</span>
+                    </label>
+                </div>
+
                 <div className="category-buttons" style={{ display: 'flex', gap: '20px' }}>
                     <button className="cyber-btn" onClick={() => onStart('html')}>
                         HTML

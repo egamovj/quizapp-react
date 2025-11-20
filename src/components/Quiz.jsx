@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import QuestionCard from './QuestionCard';
 
-const Quiz = ({ onComplete, questions, category }) => {
+const Quiz = ({ onComplete, questions, category, isSpeedrun }) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
     const [answers, setAnswers] = useState([]);
@@ -20,7 +20,7 @@ const Quiz = ({ onComplete, questions, category }) => {
     }, [category]);
 
     useEffect(() => {
-        if (showFeedback) return;
+        if (!isSpeedrun || showFeedback) return;
 
         if (timeLeft > 0) {
             const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
@@ -28,7 +28,7 @@ const Quiz = ({ onComplete, questions, category }) => {
         } else {
             handleAnswer(null);
         }
-    }, [timeLeft, showFeedback]);
+    }, [timeLeft, showFeedback, isSpeedrun]);
 
     const handleAnswer = (option) => {
         const currentQ = questions[currentQuestion];
@@ -60,7 +60,7 @@ const Quiz = ({ onComplete, questions, category }) => {
 
             if (currentQuestion + 1 < questions.length) {
                 setCurrentQuestion(currentQuestion + 1);
-                setTimeLeft(15);
+                if (isSpeedrun) setTimeLeft(15);
             } else {
                 onComplete(correct ? score + 1 : score, questions.length, newAnswers);
             }
@@ -75,9 +75,11 @@ const Quiz = ({ onComplete, questions, category }) => {
             <div className="panel-header">
                 <span className="status-blink">🟢 SYSTEM ACTIVE</span>
                 <span className="panel-id">PROTOCOL: {category ? category.toUpperCase() : 'UNKNOWN'}</span>
-                <span className="timer" style={{ color: timeLeft < 5 ? 'red' : 'var(--primary)' }}>
-                    T-{timeLeft < 10 ? `0${timeLeft}` : timeLeft}
-                </span>
+                {isSpeedrun && (
+                    <span className="timer" style={{ color: timeLeft < 5 ? 'red' : 'var(--primary)' }}>
+                        T-{timeLeft < 10 ? `0${timeLeft}` : timeLeft}
+                    </span>
+                )}
             </div>
 
             <div className="split-layout">
@@ -87,12 +89,14 @@ const Quiz = ({ onComplete, questions, category }) => {
                         <h2>{questions[currentQuestion].question}</h2>
                     </div>
 
-                    <div className="system-integrity">
-                        <label style={{ color: 'var(--text-dim)', fontSize: '0.8rem' }}>SYSTEM INTEGRITY (TIME)</label>
-                        <div className="integrity-bar">
-                            <div className="fill" style={{ width: `${integrity}%`, background: timeLeft < 5 ? 'red' : 'var(--primary)' }}></div>
+                    {isSpeedrun && (
+                        <div className="system-integrity">
+                            <label style={{ color: 'var(--text-dim)', fontSize: '0.8rem' }}>SYSTEM INTEGRITY (TIME)</label>
+                            <div className="integrity-bar">
+                                <div className="fill" style={{ width: `${integrity}%`, background: timeLeft < 5 ? 'red' : 'var(--primary)' }}></div>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 <div className="right-col">

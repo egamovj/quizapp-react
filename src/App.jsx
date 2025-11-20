@@ -20,6 +20,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showAuth, setShowAuth] = useState(false);
   const [authMode, setAuthMode] = useState('login');
+  const [isSpeedrun, setIsSpeedrun] = useState(false);
 
   useEffect(() => {
     const currentUser = getCurrentUser();
@@ -40,9 +41,15 @@ function App() {
     setGameState('welcome');
     setSelectedCategory(null);
     setShowAuth(false);
+    setIsSpeedrun(false);
   };
 
-  const startQuiz = (category) => {
+  const startQuiz = (category, speedrunMode = false) => {
+    if (category === null) {
+      // Just updating the toggle
+      setIsSpeedrun(speedrunMode);
+      return;
+    }
     setSelectedCategory(category);
     setGameState('quiz');
     setScore(0);
@@ -78,6 +85,7 @@ function App() {
     setScore(0);
     setUserAnswers([]);
     setSelectedCategory(null);
+    setIsSpeedrun(false);
   };
 
   if (!user) {
@@ -131,6 +139,7 @@ function App() {
           onComplete={finishQuiz}
           questions={questions[selectedCategory]}
           category={selectedCategory}
+          isSpeedrun={isSpeedrun}
         />
       )}
       {gameState === 'result' && (
