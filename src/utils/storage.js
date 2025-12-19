@@ -14,8 +14,6 @@ export const logoutUser = () => {
 // --- Async Supabase Functions ---
 
 export const loginUser = async (username, password) => {
-    // For simplicity, we will still use a hardcoded admin check
-    // But for students, we will check the 'users' table in Supabase
 
     if (username === 'admin' && password === '8581319') {
         const adminUser = { username: 'admin', role: 'admin', name: 'Admin User' };
@@ -147,19 +145,6 @@ export const getLeaderboard = async () => {
 };
 
 export const updateAvatar = async (username, avatarId) => {
-    // In a real app with a proper users table schema update, we would update the user row.
-    // For now, since we might not have an avatar column, we'll just store it in local storage 
-    // or assume the users table has a 'metadata' or 'avatar' column.
-    // Let's try to update the 'users' table assuming we can add a column or it exists.
-    // If not, we will fallback to localStorage for this demo to ensure it works without DB migration scripts.
-
-    // Ideally:
-    /*
-    const { error } = await supabase
-        .from('users')
-        .update({ avatar: avatarId })
-        .eq('username', username);
-    */
 
     // For this environment where I cannot easily run SQL migrations:
     localStorage.setItem(`avatar_${username}`, avatarId);

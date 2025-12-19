@@ -13,6 +13,7 @@ import Review from './components/Review';
 import Toast from './components/Toast';
 import { getCurrentUser, logoutUser, saveResult } from './utils/storage';
 import { questions } from './data/questions';
+import { shuffleArray } from './utils/quizUtils';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -27,6 +28,7 @@ function App() {
   const [toast, setToast] = useState(null);
   const [keyBuffer, setKeyBuffer] = useState('');
   const [reviewQuestions, setReviewQuestions] = useState([]);
+  const [currentQuestions, setCurrentQuestions] = useState([]);
 
   useEffect(() => {
     const currentUser = getCurrentUser();
@@ -93,6 +95,15 @@ function App() {
       setIsSpeedrun(speedrunMode);
       return;
     }
+
+    // Shuffle questions and their options
+    const categoryQuestions = [...questions[category]];
+    const shuffledQuestions = shuffleArray(categoryQuestions).map(q => ({
+      ...q,
+      options: shuffleArray(q.options)
+    }));
+
+    setCurrentQuestions(shuffledQuestions);
     setSelectedCategory(category);
     setGameState('quiz');
     setScore(0);
@@ -100,7 +111,14 @@ function App() {
   };
 
   const startReviewQuiz = (questionsToReview) => {
-    setReviewQuestions(questionsToReview);
+    // Shuffle review questions and their options
+    const shuffledQuestions = shuffleArray(questionsToReview).map(q => ({
+      ...q,
+      options: shuffleArray(q.options)
+    }));
+
+    setCurrentQuestions(shuffledQuestions);
+    setReviewQuestions(shuffledQuestions);
     setSelectedCategory('review');
     setGameState('quiz');
     setScore(0);
@@ -192,7 +210,7 @@ function App() {
       {gameState === 'quiz' && (
         <Quiz
           onComplete={finishQuiz}
-          questions={selectedCategory === 'review' ? reviewQuestions : questions[selectedCategory]}
+          questions={currentQuestions}
           category={selectedCategory}
           isSpeedrun={isSpeedrun}
         />
