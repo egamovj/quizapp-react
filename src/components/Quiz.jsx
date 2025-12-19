@@ -12,12 +12,24 @@ const Quiz = ({ onComplete, questions, category, isSpeedrun }) => {
 
     useEffect(() => {
         setCurrentQuestion(0);
-        setScore(0);
-        setAnswers([]);
+        setAnswers(new Array(questions.length).fill(null));
         setTimeLeft(15);
         setShowFeedback(false);
         setSelectedOption(null);
-    }, [category]);
+    }, [category, questions.length]);
+
+    // Sync state when navigating
+    useEffect(() => {
+        const previousAnswer = answers[currentQuestion];
+        if (previousAnswer) {
+            setSelectedOption(previousAnswer.selected);
+            setIsCorrect(previousAnswer.isCorrect);
+        } else {
+            setSelectedOption(null);
+            setIsCorrect(null);
+        }
+        if (isSpeedrun && !showFeedback) setTimeLeft(15);
+    }, [currentQuestion, answers]);
 
     useEffect(() => {
         if (!isSpeedrun || showFeedback) return;
@@ -38,10 +50,6 @@ const Quiz = ({ onComplete, questions, category, isSpeedrun }) => {
         setIsCorrect(correct);
         setShowFeedback(true);
 
-        if (correct) {
-            setScore(score + 1);
-        }
-
         const newAnswer = {
             question: currentQ.question,
             selected: option,
@@ -49,27 +57,37 @@ const Quiz = ({ onComplete, questions, category, isSpeedrun }) => {
             isCorrect: correct
         };
 
-        const newAnswers = [...answers, newAnswer];
+        const newAnswers = [...answers];
+        newAnswers[currentQuestion] = newAnswer;
         setAnswers(newAnswers);
 
-        // Delay for feedback
+        // Delay for feedback then auto-move to next if not last
         setTimeout(() => {
             setShowFeedback(false);
-            setSelectedOption(null);
-            setIsCorrect(null);
-
             if (currentQuestion + 1 < questions.length) {
                 setCurrentQuestion(currentQuestion + 1);
-                if (isSpeedrun) setTimeLeft(15);
             }
-            // MODIFIED: No automatic completion here anymore. 
-            // The user must click the "FINISH MISSION" button.
         }, 800);
     };
 
+    const handlePrev = () => {
+        if (currentQuestion > 0) {
+            setShowFeedback(false);
+            setCurrentQuestion(currentQuestion - 1);
+        }
+    };
+
+    const handleNext = () => {
+        if (currentQuestion + 1 < questions.length) {
+            setShowFeedback(false);
+            setCurrentQuestion(currentQuestion + 1);
+        }
+    };
+
     const finalizeQuiz = () => {
-        // Use the current score and answers to complete the quiz
-        onComplete(score, questions.length, answers);
+        // Calculate final score based on all answers
+        const finalScore = answers.reduce((acc, ans) => (ans && ans.isCorrect ? acc + 1 : acc), 0);
+        onComplete(finalScore, questions.length, answers);
     };
 
     const progress = ((currentQuestion) / questions.length) * 100;
@@ -129,8 +147,27 @@ const Quiz = ({ onComplete, questions, category, isSpeedrun }) => {
                         disabled={showFeedback}
                         selectedOption={selectedOption}
                         correctAnswer={questions[currentQuestion].answer}
-                        showResult={showFeedback}
+                        showResult={false}
                     />
+
+                    <div className="quiz-nav" style={{ display: 'flex', gap: '20px', marginTop: '30px', justifyContent: 'center' }}>
+                        <button
+                            className="cyber-btn small"
+                            onClick={handlePrev}
+                            disabled={currentQuestion === 0}
+                            style={{ width: '120px' }}
+                        >
+                            &lt; PREV
+                        </button>
+                        <button
+                            className="cyber-btn small"
+                            onClick={handleNext}
+                            disabled={currentQuestion === questions.length - 1}
+                            style={{ width: '120px' }}
+                        >
+                            NEXT &gt;
+                        </button>
+                    </div>
                 </div>
             </div>
 
