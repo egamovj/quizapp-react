@@ -61,10 +61,15 @@ const Quiz = ({ onComplete, questions, category, isSpeedrun }) => {
             if (currentQuestion + 1 < questions.length) {
                 setCurrentQuestion(currentQuestion + 1);
                 if (isSpeedrun) setTimeLeft(15);
-            } else {
-                onComplete(correct ? score + 1 : score, questions.length, newAnswers);
             }
-        }, 2000);
+            // MODIFIED: No automatic completion here anymore. 
+            // The user must click the "FINISH MISSION" button.
+        }, 800);
+    };
+
+    const finalizeQuiz = () => {
+        // Use the current score and answers to complete the quiz
+        onComplete(score, questions.length, answers);
     };
 
     const progress = ((currentQuestion) / questions.length) * 100;
@@ -73,13 +78,31 @@ const Quiz = ({ onComplete, questions, category, isSpeedrun }) => {
     return (
         <div className="dashboard-panel quiz-panel">
             <div className="panel-header">
-                <span className="status-blink">🟢 SYSTEM ACTIVE</span>
-                <span className="panel-id">PROTOCOL: {category ? category.toUpperCase() : 'UNKNOWN'}</span>
-                {isSpeedrun && (
-                    <span className="timer" style={{ color: timeLeft < 5 ? 'red' : 'var(--primary)' }}>
-                        T-{timeLeft < 10 ? `0${timeLeft}` : timeLeft}
-                    </span>
-                )}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <span className="status-blink">🟢 SYSTEM ACTIVE</span>
+                    <span className="panel-id">PROTOCOL: {category ? category.toUpperCase() : 'UNKNOWN'}</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                    {isSpeedrun && (
+                        <span className="timer" style={{ color: timeLeft < 5 ? 'red' : 'var(--primary)' }}>
+                            T-{timeLeft < 10 ? `0${timeLeft}` : timeLeft}
+                        </span>
+                    )}
+                    <button
+                        className="cyber-btn"
+                        onClick={finalizeQuiz}
+                        style={{
+                            padding: '5px 15px',
+                            fontSize: '0.8rem',
+                            background: 'rgba(255, 0, 85, 0.2)',
+                            borderColor: 'var(--accent)',
+                            color: 'var(--accent)'
+                        }}
+                    >
+                        [ FINISH MISSION ]
+                    </button>
+                </div>
             </div>
 
             <div className="split-layout">
