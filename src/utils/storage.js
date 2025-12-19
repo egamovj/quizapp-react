@@ -69,6 +69,7 @@ export const registerUser = async (name, username, password) => {
 };
 
 export const saveResult = async (result) => {
+    // Try full save with new features
     const { error } = await supabase
         .from('results')
         .insert([{
@@ -80,7 +81,25 @@ export const saveResult = async (result) => {
             category: result.category || null
         }]);
 
-    if (error) console.error('Error saving result:', error);
+    if (error) {
+        console.warn('Full save failed, attempting fallback (simple save):', error.message);
+
+        // Fallback: Simple save without newer columns (compat for old schema)
+        const { error: fallbackError } = await supabase
+            .from('results')
+            .insert([{
+                student_name: result.studentName,
+                score: result.score,
+                total: result.total,
+                rank: result.rank
+            }]);
+
+        if (fallbackError) {
+            console.error('Critical error saving result (fallback also failed):', fallbackError.message);
+        } else {
+            console.log('Result saved successfully using fallback mode.');
+        }
+    }
 };
 
 export const getResults = async () => {
