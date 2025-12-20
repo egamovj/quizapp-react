@@ -37,100 +37,343 @@ export const questions = {
         },
         {
             id: 6,
-            question: "HTMLda qatorni bitta pastga tushirish uchun qaysi tegdan foydalanamiz?",
-            options: ["hr", "br", "dl", "dt"],
-            answer: "br",
+            question: "Web-sahifaning asosiy strukturasini belgilovchi va barcha kodlarni o'z ichiga oluvchi eng katta (ona) teg qaysi?",
+            options: ["<body>", "<head>", "<html>", "<structure>"],
+            answer: "<html>"
         },
         {
             id: 7,
-            question: "img tegidagi qaysi atribut rasm ko'rinmasa o'rniga matn chiqaradi?",
-            options: ["src", "href", "alt", "data"],
-            answer: "alt",
+            question: "HTML hujjati qaysi kengaytma (extension) bilan saqlanishi kerak?",
+            options: [".txt", ".web", ".html yoki .htm", ".doc"],
+            answer: ".html yoki .htm"
         },
         {
             id: 8,
-            question: "HTMLda text ostiga chizish uchun qaysi tegdan foydalanamiz?",
-            options: ["u", "i", "del", "sup"],
-            answer: "u",
+            question: "Matnni 'abzas' (yangi xatboshi) ko'rinishida yozish uchun qaysi teg ishlatiladi?",
+            options: ["<br>", "<p>", "<text>", "<section>"],
+            answer: "<p>"
         },
         {
             id: 9,
-            question: "Ko'p qatorli matn kiritish maydoni qaysi teg?",
-            options: ["div", "input", "placeholder", "textarea"],
-            answer: "textarea",
+            question: "Quyidagi sarlavha (heading) teglaridan qaysi biri eng katta o'lchamga ega?",
+            options: ["<h6>", "<h3>", "<h2>", "<h1>"],
+            answer: "<h1>"
         },
         {
             id: 10,
-            question: "Sahifaga rasm joylash uchun qaysi tegdan foydalaniladi?",
-            options: ["pic", "img", "gif", "src"],
-            answer: "img",
+            question: "Matnni qalin (bold) qilib ko'rsatish uchun qaysi teglar ishlatiladi?",
+            options: ["<b> va <strong>", "<i> va <em>", "<mark> va <small>", "<del> va <ins>"],
+            answer: "<b> va <strong>"
         },
         {
             id: 11,
-            question: "Matnni qalin qilish uchun qaysi semantik teg ishlatiladi?",
-            options: ["sup", "mark", "strong", "em"],
-            answer: "strong",
+            question: "Jadval (table) yaratishda qatorni belgilash uchun qaysi teg ishlatiladi?",
+            options: ["<td>", "<th>", "<tr>", "<table>"],
+            answer: "<tr>"
+        },
+        {
+            id: 12,
+            question: "Description List (ta'rif ro'yxati) yaratishda ishlatiladigan asosiy teglar ketma-ketligi qaysi?",
+            options: ["<ul>, <li>", "<ol>, <li>", "<dl>, <dt>, <dd>", "<list>, <item>"],
+            answer: "<dl>, <dt>, <dd>"
+        },
+        {
+            id: 13,
+            question: "Formada bir nechta elementlarni guruhlash va ularni ramka ichiga olish uchun qaysi teg ishlatiladi?",
+            options: ["<fieldset>", "<group>", "<section>", "<div>"],
+            answer: "<fieldset>"
+        },
+        {
+            id: 14,
+            question: "Foydalanuvchi kiritayotgan ma'lumotga qarab 'takliflar ro'yxati'ni (avtomatik to'ldirish varianti) chiqarish uchun qaysi teg ishlatiladi?",
+            options: ["<select>", "<datalist>", "<option>", "<details>"],
+            answer: "<datalist>"
+        },
+        {
+            id: 15,
+            question: "HTML5 da hujjat turini e'lon qilish (Doctype) qanday yoziladi?",
+            options: ["<!DOCTYPE html5>", "<!DOCTYPE html>", "<doctype html>", "<html type='5'>"],
+            answer: "<!DOCTYPE html>"
+        },
+        {
+            id: 16,
+            question: "Brauzer oynasining sarlavhasida (tab qismida) ko'rinadigan matn qaysi teg ichiga yoziladi?",
+            options: ["<meta>", "<header>", "<title>", "<h1>"],
+            answer: "<title>"
+        },
+        {
+            id: 17,
+            question: "Havola (link) boshqa sahifada emas, aynan yangi oynada (tab) ochilishi uchun <a> tegiga qanday atribut qo'shish kerak?",
+            options: ["target='_self'", "target='_blank'", "target='_new'", "window='new'"],
+            answer: "target='_blank'"
+        },
+        {
+            id: 18,
+            question: "Kimyoviy formulalar (masalan, H₂O) yozishda '2' raqamini pastga tushirish uchun qaysi teg ishlatiladi?",
+            options: ["<sup>", "<small>", "<down>", "<sub>"],
+            answer: "<sub>"
+        },
+        {
+            id: 19,
+            question: "Jadval katakchalarini birlashtirish haqida: Ikki ustunni (column) bitta qilish uchun qaysi atribut ishlatiladi?",
+            options: ["rowspan='2'", "colspan='2'", "merge='col'", "col-merge='2'"],
+            answer: "colspan='2'"
+        },
+        {
+            id: 20,
+            question: "<input type='radio'> ishlatilganda, bir vaqtning o'zida faqat bitta variant tanlanishi uchun nima qilish kerak?",
+            options: [
+                "Hammasiga required qo'shish kerak",
+                "Hammasiga har xil id berish kerak",
+                "Hammasiga bir xil name atributini berish kerak",
+                "input o'rniga checkbox ishlatish kerak"
+            ],
+            answer: "Hammasiga bir xil name atributini berish kerak"
+        },
+        {
+            id: 21,
+            question: "Sahifaga rasm joylashtirishda, agar rasm yuklanmasa, o'rniga matn chiqishi uchun qaysi atribut ishlatiladi?",
+            options: ["title", "src", "href", "alt"],
+            answer: "alt"
+        },
+        {
+            id: 22,
+            question: "HTML izohlari (comments) qanday sintaksis bilan yoziladi?",
+            options: ["/* Bu izoh */", "", "// Bu izoh", "<comment> Bu izoh </comment>"],
+            answer: ""
+        },
+        {
+            id: 23,
+            question: "Formada ma'lumot jo'natilayotganda qaysi method xavfsizroq hisoblanadi va ma'lumotlar URL manzilida ko'rinmaydi?",
+            options: ["GET", "POST", "SUBMIT", "ACTION"],
+            answer: "POST"
+        },
+        {
+            id: 24,
+            question: "Input maydonida foydalanuvchiga nima yozish kerakligini eslatib turuvchi xira matn qaysi atribut orqali qo'yiladi?",
+            options: ["value", "name", "text", "placeholder"],
+            answer: "placeholder"
+        },
+        {
+            id: 25,
+            question: "Boshqa bir web-sahifani joriy sahifa ichida (oyna ichida oyna) ko'rsatish uchun qaysi teg ishlatiladi?",
+            options: ["<window>", "<iframe>", "<embed>", "<link>"],
+            answer: "<iframe>"
+        },
+        {
+            id: 26,
+            question: "Foydalanuvchi fayl yuklashi uchun input tegining type atributiga qanday qiymat beriladi?",
+            options: ["file", "upload", "image", "data"],
+            answer: "file"
+        },
+        {
+            id: 27,
+            question: "Video uchun 'Play', 'Pause' va ovoz boshqarish tugmalari ko'rinishi uchun qaysi atribut shart?",
+            options: ["buttons", "autoplay", "manage", "controls"],
+            answer: "controls"
         }
+
     ],
     css: [
         {
             id: 1,
-            question: "CSS kengaytmasi to'g'ri berilgan qatorni toping?",
+            question: "CSS qisqartmasining to'liq ma'nosi nima?",
             options: [
-                "Cascading Style Sheet",
-                "Cute Style Sheet",
-                "Computer Style Sheet",
-                "Codehal Style Sheet",
+                "Computer Style Sheets",
+                "Creative Style System",
+                "Cascading Style Sheets",
+                "Colorful Style Sheets"
             ],
-            answer: "Cascading Style Sheet",
+            answer: "Cascading Style Sheets"
         },
         {
             id: 2,
-            question: "Uzuk chiziqli border qanday yoziladi?",
-            options: ["dashed", "solid", "dotted", "textarea"],
-            answer: "dashed",
+            question: "Tashqi (External) CSS faylini HTML hujjatiga ulash uchun qaysi teg ishlatiladi?",
+            options: ["<style>", "<script>", "<css>", "<link>"],
+            answer: "<link>"
         },
         {
             id: 3,
-            question: "Quyidagilardan qaysi biri selector bo'la olmaydi?",
-            options: [".title", "h1", "$h1", "#title"],
-            answer: "$h1",
+            question: "Element ichidagi matn rangini o'zgartirish uchun qaysi xususiyat (property) ishlatiladi?",
+            options: ["text-color", "font-color", "color", "background-color"],
+            answer: "color"
         },
         {
             id: 4,
-            question: "Nuqtali border qanday yoziladi?",
-            options: ["groove", "solid", "dashed", "dotted"],
-            answer: "dotted",
+            question: "ID selektori CSS da qanday belgi bilan ifodalanadi?",
+            options: [". (nuqta)", "# (panjara)", "* (yulduzcha)", "@ (kuchukcha)"],
+            answer: "# (panjara)"
         },
         {
             id: 5,
-            question: "RGB ranglarini qaysi sonlar orqali berishimiz mumkin?",
-            options: ["0-256", "0-255", "0-188", "1-200"],
-            answer: "0-255",
+            question: "Elementning chegarasi (border) va uning ichidagi mazmun (content) orasidagi masofa nima deb ataladi?",
+            options: ["Margin", "Padding", "Border", "Outline"],
+            answer: "Padding"
         },
         {
             id: 6,
-            question: "Matnni katta-kichik qilish uchun qaysi xossa ishlatiladi?",
-            options: ["font-weight", "font-style", "font-size", "line-height"],
-            answer: "font-size",
+            question: "margin: 10px 20px; yozuvi nimani anglatadi?",
+            options: [
+                "Barcha tomonlar 10px va 20px",
+                "Yuqori va pastki: 10px, O'ng va chap: 20px",
+                "Yuqori va chap: 10px, Pastki va o'ng: 20px",
+                "Faqat yuqori qism 10px, qolganlari 20px"
+            ],
+            answer: "Yuqori va pastki: 10px, O'ng va chap: 20px"
         },
         {
             id: 7,
-            question: "CSS ni necha xil yo'l bilan HTMLga ulash mumkin?",
-            options: ["3", "4", "2", "1"],
-            answer: "3",
+            question: "Qaysi display xususiyati elementni yangi qatordan boshlanishiga va butun kenglikni egallashiga majbur qiladi?",
+            options: ["inline", "inline-block", "block", "none"],
+            answer: "block"
         },
         {
             id: 8,
-            question: "Elementga soya qo'shish uchun qaysi xossa ishlatiladi?",
-            options: ["box-shadow", "text-shadow", "border-shadow", "shadow"],
-            answer: "box-shadow",
+            question: "Elementni ota-ona elementiga nisbatan joylashtirish uchun qaysi position qiymati ishlatiladi (ota-onada relative bo'lsa)?",
+            options: ["static", "fixed", "absolute", "sticky"],
+            answer: "absolute"
         },
         {
             id: 9,
-            question: "Elementning chekkalarini yumaloqlash uchun qaysi xossa?",
-            options: ["border-line", "border-radius", "round-border", "curve-border"],
-            answer: "border-radius",
+            question: "Elementni o'z o'qi atrofida aylantirish (rotate) uchun qaysi CSS xususiyati ishlatiladi?",
+            options: ["transition", "animation", "transform", "translate"],
+            answer: "transform"
+        },
+        {
+            id: 10,
+            question: "CSS o'zgarishlarini silliq va vaqt davomida amalga oshirish uchun qaysi xususiyat ishlatiladi?",
+            options: ["transform", "transition", "keyframe", "delay"],
+            answer: "transition"
+        },
+        {
+            id: 11,
+            question: "Quyidagi CSS selektorlaridan qaysi biri eng yuqori ustunlikka (specificity) ega?",
+            options: ["div p", ".menu", "#header", "*"],
+            answer: "#header"
+        },
+        {
+            id: 12,
+            question: "Elementning fon rasmini takrorlanmasligini ta'minlash uchun qaysi kod yoziladi?",
+            options: [
+                "background-repeat: no-repeat;",
+                "background-size: cover;",
+                "background-attachment: fixed;",
+                "background-position: center;"
+            ],
+            answer: "background-repeat: no-repeat;"
+        },
+        {
+            id: 13,
+            question: "box-sizing: border-box; xususiyati nima qiladi?",
+            options: [
+                "Elementga qalin chegara qo'shadi",
+                "Padding va Border elementning umumiy o'lchami ichiga olinadi",
+                "Elementni quti shaklida ko'rsatadi",
+                "Marginlarni avtomatik hisoblaydi"
+            ],
+            answer: "Padding va Border elementning umumiy o'lchami ichiga olinadi"
+        },
+        {
+            id: 14,
+            question: "Sichqoncha element ustiga borganda uning stili o'zgarishi uchun qaysi psevdo-klass ishlatiladi?",
+            options: [":active", ":focus", ":hover", ":visited"],
+            answer: ":hover"
+        },
+        {
+            id: 15,
+            question: "position: fixed; berilgan element sahifada qanday harakatlanadi?",
+            options: [
+                "Skroll qilinganda ham ekranda joyida qotib turadi",
+                "Ota-ona elementiga nisbatan joylashadi",
+                "Oddiy oqim bo'yicha joylashadi",
+                "Sahifa oxiriga tushib qoladi"
+            ],
+            answer: "Skroll qilinganda ham ekranda joyida qotib turadi"
+        },
+        {
+            id: 16,
+            question: "z-index xususiyati qachon ishlaydi?",
+            options: [
+                "Har doim barcha elementlarda",
+                "Faqat display: block bo'lganda",
+                "Position static dan boshqa qiymatda bo'lganda",
+                "Faqat rasmlarda"
+            ],
+            answer: "Position static dan boshqa qiymatda bo'lganda"
+        },
+        {
+            id: 17,
+            question: "Blok elementni sahifa o'rtasiga (gorizontal) joylashtirishning eng mashhur usuli qaysi?",
+            options: ["text-align: center;", "margin: 0 auto;", "padding: 50%;", "float: center;"],
+            answer: "margin: 0 auto;"
+        },
+        {
+            id: 18,
+            question: "CSS da padding: 10px 20px 15px; yozilsa, chap tomon (left) padding qanchaga teng?",
+            options: ["10px", "20px", "15px", "0px"],
+            answer: "20px"
+        },
+        {
+            id: 19,
+            question: "transform: scale(1.5); kodi elementga qanday ta'sir qiladi?",
+            options: [
+                "1.5 gradusga buradi",
+                "1.5 pikselga suradi",
+                "O'z o'lchamidan 1.5 barobar kattalashtiradi",
+                "Shaffofligini oshiradi"
+            ],
+            answer: "O'z o'lchamidan 1.5 barobar kattalashtiradi"
+        },
+        {
+            id: 20,
+            question: "Animatsiyani cheksiz davom ettirish uchun animation-iteration-count ga qanday qiymat beriladi?",
+            options: ["forever", "loop", "infinite", "always"],
+            answer: "infinite"
+        },
+        {
+            id: 21,
+            question: "Ranglarni shaffoflik (transparency) bilan belgilash uchun qaysi format ishlatiladi?",
+            options: ["rgb()", "rgba()", "hex", "hsl"],
+            answer: "rgba()"
+        },
+        {
+            id: 22,
+            question: "width: 200px va padding: 20px bo'lsa (content-box), umumiy kenglik qancha bo'ladi?",
+            options: ["200px", "220px", "240px", "180px"],
+            answer: "240px"
+        },
+        {
+            id: 23,
+            question: "Nega tashqi CSS (External) eng yaxshi usul hisoblanadi?",
+            options: [
+                "Kodning qayta ishlatilishi va yuklanish tezligi uchun",
+                "Ranglarni chiroyliroq chiqaradi",
+                "HTML fayl hajmini oshiradi",
+                "Faqat shu usulda animatsiya qilish mumkin"
+            ],
+            answer: "Kodning qayta ishlatilishi va yuklanish tezligi uchun"
+        },
+        {
+            id: 24,
+            question: "position: absolute; bo'lgan element kimga nisbatan joylashadi?",
+            options: [
+                "Har doim body ga nisbatan",
+                "Eng yaqin pozitsiyalangan (non-static) ota-onaga nisbatan",
+                "Faqat o'zidan oldingi elementga",
+                "Brauzer oynasiga"
+            ],
+            answer: "Eng yaqin pozitsiyalangan (non-static) ota-onaga nisbatan"
+        },
+        {
+            id: 25,
+            question: "CSS da @keyframes nimani aniqlash uchun ishlatiladi?",
+            options: [
+                "Mobil o'lchamlarni",
+                "Shrift turlarini",
+                "Animatsiya qadamlari va holatlarini",
+                "Ranglar palitrasini"
+            ],
+            answer: "Animatsiya qadamlari va holatlarini"
         }
     ],
     js: [
