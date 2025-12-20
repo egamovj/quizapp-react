@@ -67,7 +67,7 @@ export const registerUser = async (name, username, password) => {
 };
 
 export const saveResult = async (result) => {
-    // Try full save with new features
+    // Try full save with detailed answer breakdown
     const { error } = await supabase
         .from('results')
         .insert([{
@@ -80,22 +80,24 @@ export const saveResult = async (result) => {
         }]);
 
     if (error) {
-        console.warn('Full save failed, attempting fallback (simple save):', error.message);
+        // If answers column is missing (old schema), use fallback
+        if (error.message.includes('column "answers"') || error.code === '42703') {
+            const { error: fallbackError } = await supabase
+                .from('results')
+                .insert([{
+                    student_name: result.studentName,
+                    score: result.score,
+                    total: result.total,
+                    rank: result.rank
+                }]);
 
-        // Fallback: Simple save without newer columns (compat for old schema)
-        const { error: fallbackError } = await supabase
-            .from('results')
-            .insert([{
-                student_name: result.studentName,
-                score: result.score,
-                total: result.total,
-                rank: result.rank
-            }]);
-
-        if (fallbackError) {
-            console.error('Critical error saving result (fallback also failed):', fallbackError.message);
+            if (fallbackError) {
+                console.error('Critical: Storage fallback failed:', fallbackError.message);
+            } else {
+                console.log('Result saved successfully (Compatibility Mode: No detailed answers stored).');
+            }
         } else {
-            console.log('Result saved successfully using fallback mode.');
+            console.error('Supabase Save Error:', error.message);
         }
     }
 };

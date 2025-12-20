@@ -85,9 +85,11 @@ const Quiz = ({ onComplete, questions, category, isSpeedrun }) => {
     };
 
     const finalizeQuiz = () => {
-        // Calculate final score based on all answers
-        const finalScore = answers.reduce((acc, ans) => (ans && ans.isCorrect ? acc + 1 : acc), 0);
-        onComplete(finalScore, questions.length, answers);
+        // Calculate final score based on all answers (answered ones)
+        // We filter out nulls to avoid crashes in Result component
+        const answeredOnly = answers.filter(ans => ans !== null);
+        const finalScore = answeredOnly.reduce((acc, ans) => (ans.isCorrect ? acc + 1 : acc), 0);
+        onComplete(finalScore, questions.length, answeredOnly);
     };
 
     const progress = ((currentQuestion) / questions.length) * 100;

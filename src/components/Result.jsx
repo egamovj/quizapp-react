@@ -30,7 +30,7 @@ const Result = ({ score, total, userAnswers, onRetry, onHome }) => {
                 <div className="rank-col">
                     <div className="rank-badge">
                         <span className="rank-label">DARAJA</span>
-                        <span className={`rank - value rank - ${rank} `}>{rank}</span>
+                        <span className={`rank-value rank-${rank}`}>{rank}</span>
                     </div>
                     <div className="score-stat">
                         <span className="stat-label">NATIJA </span>
@@ -41,8 +41,8 @@ const Result = ({ score, total, userAnswers, onRetry, onHome }) => {
                 <div className="log-col">
                     <h3>MISSIYANING JURNALI</h3>
                     <div className="log-list">
-                        {userAnswers.map((answer, index) => (
-                            <div key={index} className={`log - entry ${answer.isCorrect ? 'success' : 'fail'} `}>
+                        {userAnswers.filter(ans => ans !== null).map((answer, index) => (
+                            <div key={index} className={`log-entry ${answer.isCorrect ? 'success' : 'fail'}`}>
                                 <div className="log-header">
                                     <span className="log-id">LOG_0{index + 1}</span>
                                     <span className="log-status">{answer.isCorrect ? 'SUCCESS' : 'FAILURE'}</span>
