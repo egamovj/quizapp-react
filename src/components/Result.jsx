@@ -15,12 +15,13 @@ const Result = ({ score, total, userAnswers, onRetry, onHome }) => {
 
     const percentage = (score / total) * 100;
     let rank = 'C';
-    if (percentage === 100) rank = '';
+    if (percentage === 100) rank = 'S';
     else if (percentage >= 80) rank = 'A';
     else if (percentage >= 60) rank = 'B';
 
     return (
-        <div className="dashboard-panel result-panel">
+        <div className="dashboard-panel result-panel" style={{ position: 'relative', overflow: 'hidden' }}>
+            <div className="scanline"></div>
             <div className="panel-header">
                 <span className="status-blink">🔵 MISSION COMPLETE</span>
                 <span className="panel-id">REPORT GENERATED</span>
@@ -30,7 +31,7 @@ const Result = ({ score, total, userAnswers, onRetry, onHome }) => {
                 <div className="rank-col">
                     <div className="rank-badge">
                         <span className="rank-label">DARAJA</span>
-                        <span className={`rank-value rank-${rank}`}>{rank}</span>
+                        <span className={`rank-value rank-${rank} glitch-text`} data-text={rank}>{rank}</span>
                     </div>
                     <div className="score-stat">
                         <span className="stat-label">NATIJA </span>

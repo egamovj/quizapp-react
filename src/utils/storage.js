@@ -157,6 +157,32 @@ export const getAvatar = (username) => {
     return localStorage.getItem(`avatar_${username}`) || '🧑‍💻';
 };
 
+// --- Achievements ---
+
+export const ACHIEVEMENTS = {
+    MASTER_CODER: { id: 'master_coder', icon: '🏆', title: 'Master Coder', description: 'Score 100% on any quiz.' },
+    SPEED_DEMON: { id: 'speed_demon', icon: '⚡', title: 'Speed Demon', description: 'Complete a quiz in under 60 seconds.' },
+    NIGHT_OWL: { id: 'night_owl', icon: '🦉', title: 'Night Owl', description: 'Complete a quiz after 10 PM.' },
+    FIRST_BLOOD: { id: 'first_blood', icon: '🩸', title: 'First Blood', description: 'Complete your first quiz.' },
+    SURVIVOR: { id: 'survivor', icon: '🛡️', title: 'Survivor', description: 'Complete a quiz with a score above 60%.' }
+};
+
+export const unlockAchievement = (username, achievementId) => {
+    const key = `achievements_${username}`;
+    const earned = JSON.parse(localStorage.getItem(key) || '[]');
+    if (!earned.includes(achievementId)) {
+        earned.push(achievementId);
+        localStorage.setItem(key, JSON.stringify(earned));
+        return true; // Newly unlocked
+    }
+    return false; // Already unlocked
+};
+
+export const getEarnedAchievements = (username) => {
+    const key = `achievements_${username}`;
+    return JSON.parse(localStorage.getItem(key) || '[]');
+};
+
 export const getUsers = async () => {
     const { data, error } = await supabase
         .from('users')

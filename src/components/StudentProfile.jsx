@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getResults, updateAvatar, getAvatar, updateUser } from '../utils/storage';
+import { getResults, updateAvatar, getAvatar, updateUser, getEarnedAchievements, ACHIEVEMENTS } from '../utils/storage';
 
 const AVATARS = [
     '🧑‍💻', '🦸', '🦹', '🤖', '👽', '👾', '👻', '🐯', '🦁', '🐺', '🦊', '🐼'
@@ -13,6 +13,7 @@ const StudentProfile = ({ user, onBack }) => {
         averageScore: 0
     });
     const [currentAvatar, setCurrentAvatar] = useState('🧑‍💻');
+    const [earnedAchievements, setEarnedAchievements] = useState([]);
     const [loading, setLoading] = useState(true);
 
     // Edit Mode State
@@ -29,6 +30,10 @@ const StudentProfile = ({ user, onBack }) => {
             // Load avatar
             const savedAvatar = getAvatar(user.username);
             setCurrentAvatar(savedAvatar);
+
+            // Load achievements
+            const earnedIds = getEarnedAchievements(user.username);
+            setEarnedAchievements(earnedIds);
 
             // Load stats
             const allResults = await getResults();
@@ -110,14 +115,31 @@ const StudentProfile = ({ user, onBack }) => {
                         justifyContent: 'center',
                         alignItems: 'center',
                         fontSize: '5rem',
-                        margin: '0 auto 20px auto',
+                        margin: '0 auto 10px auto',
                         background: 'rgba(0, 255, 0, 0.05)',
-                        boxShadow: '0 0 20px rgba(0, 255, 0, 0.1)'
+                        boxShadow: '0 0 20px rgba(0, 255, 0, 0.1)',
+                        position: 'relative',
+                        overflow: 'hidden'
                     }}>
+                        <div className="scanline" style={{ opacity: 0.05 }}></div>
                         {currentAvatar}
                     </div>
                     <h2 style={{ textAlign: 'center', color: 'var(--primary)', marginBottom: '5px' }}>{user.name}</h2>
-                    <p style={{ textAlign: 'center', color: 'var(--text-dim)', fontSize: '0.9rem' }}>LEVEL {Math.floor(stats.totalScore / 100) + 1} AGENT</p>
+                    <div className="xp-container" style={{ marginBottom: '20px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', color: 'var(--text-dim)', marginBottom: '5px' }}>
+                            <span>LEVEL {Math.floor(stats.totalScore / 500) + 1}</span>
+                            <span>{stats.totalScore % 500} / 500 XP</span>
+                        </div>
+                        <div style={{ width: '100%', height: '6px', background: '#222', borderRadius: '3px', overflow: 'hidden', border: '1px solid #333' }}>
+                            <div style={{
+                                width: `${(stats.totalScore % 500) / 5}%`,
+                                height: '100%',
+                                background: 'linear-gradient(90deg, var(--primary), var(--secondary))',
+                                boxShadow: '0 0 10px var(--primary)'
+                            }}></div>
+                        </div>
+                    </div>
+                    <p style={{ textAlign: 'center', color: 'var(--text-dim)', fontSize: '0.8rem', opacity: 0.7 }}>RANK: OPERATIVE</p>
 
                     <div className="avatar-selector" style={{ marginTop: '30px' }}>
                         <h4 style={{ color: 'var(--secondary)', marginBottom: '10px' }}>CHANGE AVATAR</h4>
@@ -212,25 +234,46 @@ const StudentProfile = ({ user, onBack }) => {
                                 </div>
                             </div>
 
-                            <h3 style={{ borderBottom: '1px solid var(--primary-dim)', paddingBottom: '10px', marginBottom: '20px' }}>ACHIEVEMENTS</h3>
-                            <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                                {stats.missionsCompleted > 0 ? (
-                                    <div title="Completed First Mission" style={{ width: '60px', height: '60px', background: '#333', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', borderRadius: '50%', border: '2px solid gold' }}>🏁</div>
-                                ) : (
-                                    <div style={{ width: '60px', height: '60px', background: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', borderRadius: '50%', border: '2px dashed #444', opacity: 0.5 }}>🔒</div>
-                                )}
-
-                                {stats.sRanks > 0 ? (
-                                    <div title="Achieved S-Rank" style={{ width: '60px', height: '60px', background: '#333', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', borderRadius: '50%', border: '2px solid gold' }}>🏆</div>
-                                ) : (
-                                    <div style={{ width: '60px', height: '60px', background: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', borderRadius: '50%', border: '2px dashed #444', opacity: 0.5 }}>🔒</div>
-                                )}
-
-                                {stats.totalScore >= 1000 ? (
-                                    <div title="1000+ Score Club" style={{ width: '60px', height: '60px', background: '#333', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', borderRadius: '50%', border: '2px solid gold' }}>💎</div>
-                                ) : (
-                                    <div style={{ width: '60px', height: '60px', background: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', borderRadius: '50%', border: '2px dashed #444', opacity: 0.5 }}>🔒</div>
-                                )}
+                            <h3 style={{ borderBottom: '1px solid var(--primary-dim)', paddingBottom: '10px', marginBottom: '20px' }}>SYSTEM ACHIEVEMENTS</h3>
+                            <div style={{ display: 'flex', gap: '25px', flexWrap: 'wrap', padding: '10px' }}>
+                                {Object.values(ACHIEVEMENTS).map(ach => {
+                                    const isEarned = earnedAchievements.includes(ach.id);
+                                    return (
+                                        <div
+                                            key={ach.id}
+                                            title={`${ach.title}: ${ach.description}`}
+                                            style={{
+                                                width: '70px',
+                                                height: '70px',
+                                                background: isEarned ? 'rgba(0, 255, 0, 0.1)' : 'rgba(255,255,255,0.02)',
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                fontSize: '1.8rem',
+                                                borderRadius: '12px',
+                                                border: isEarned ? '2px solid var(--primary)' : '2px dashed #333',
+                                                opacity: isEarned ? 1 : 0.3,
+                                                position: 'relative',
+                                                transition: 'all 0.3s',
+                                                boxShadow: isEarned ? '0 0 15px rgba(0, 255, 0, 0.2)' : 'none'
+                                            }}
+                                        >
+                                            {isEarned ? ach.icon : '🔒'}
+                                            {isEarned && (
+                                                <span style={{
+                                                    fontSize: '0.6rem',
+                                                    color: 'var(--primary)',
+                                                    marginTop: '5px',
+                                                    fontWeight: 'bold',
+                                                    textAlign: 'center'
+                                                }}>
+                                                    {ach.title.split(' ')[0]}
+                                                </span>
+                                            )}
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </>
                     )}

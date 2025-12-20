@@ -11,7 +11,8 @@ import StudyGuide from './components/StudyGuide';
 import Analytics from './components/Analytics';
 import Review from './components/Review';
 import Toast from './components/Toast';
-import { getCurrentUser, logoutUser, saveResult } from './utils/storage';
+
+import { getCurrentUser, logoutUser, saveResult, unlockAchievement, ACHIEVEMENTS } from './utils/storage';
 import { questions } from './data/questions';
 import { shuffleArray } from './utils/quizUtils';
 
@@ -75,6 +76,7 @@ function App() {
   }, [keyBuffer]);
 
   const handleLogin = (loggedInUser) => {
+
     setUser(loggedInUser);
     setGameState('welcome');
     setShowAuth(false);
@@ -125,7 +127,7 @@ function App() {
     setUserAnswers([]);
   };
 
-  const finishQuiz = (finalScore, total, answers) => {
+  const finishQuiz = (finalScore, total, answers, timeTaken) => {
     setScore(finalScore);
     setTotalQuestions(total);
     setUserAnswers(answers);
@@ -148,10 +150,56 @@ function App() {
         answers: answers,
         category: selectedCategory
       });
+
+      // Achievement Logic
+      const newlyUnlocked = [];
+
+      // Master Coder
+      if (finalScore === total) {
+        if (unlockAchievement(user.username, ACHIEVEMENTS.MASTER_CODER.id)) {
+          newlyUnlocked.push(ACHIEVEMENTS.MASTER_CODER);
+        }
+      }
+
+      // Speed Demon
+      if (timeTaken < 60) {
+        if (unlockAchievement(user.username, ACHIEVEMENTS.SPEED_DEMON.id)) {
+          newlyUnlocked.push(ACHIEVEMENTS.SPEED_DEMON);
+        }
+      }
+
+      // Night Owl
+      const hour = new Date().getHours();
+      if (hour >= 22 || hour < 5) {
+        if (unlockAchievement(user.username, ACHIEVEMENTS.NIGHT_OWL.id)) {
+          newlyUnlocked.push(ACHIEVEMENTS.NIGHT_OWL);
+        }
+      }
+
+      // First Blood
+      if (unlockAchievement(user.username, ACHIEVEMENTS.FIRST_BLOOD.id)) {
+        newlyUnlocked.push(ACHIEVEMENTS.FIRST_BLOOD);
+      }
+
+      // Survivor
+      if ((finalScore / total) >= 0.6) {
+        if (unlockAchievement(user.username, ACHIEVEMENTS.SURVIVOR.id)) {
+          newlyUnlocked.push(ACHIEVEMENTS.SURVIVOR);
+        }
+      }
+
+      if (newlyUnlocked.length > 0) {
+
+        setToast({
+          message: `🔓 UNLOCKED: ${newlyUnlocked.map(a => a.title).join(', ')}`,
+          type: 'achievement'
+        });
+      }
     }
   };
 
   const goHome = () => {
+
     setGameState('welcome');
     setScore(0);
     setUserAnswers([]);

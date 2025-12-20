@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import QuestionCard from './QuestionCard';
 
+
 const Quiz = ({ onComplete, questions, category, isSpeedrun }) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
@@ -9,6 +10,11 @@ const Quiz = ({ onComplete, questions, category, isSpeedrun }) => {
     const [showFeedback, setShowFeedback] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
     const [isCorrect, setIsCorrect] = useState(null);
+    const [startTime, setStartTime] = useState(null);
+
+    useEffect(() => {
+        setStartTime(Date.now());
+    }, []);
 
     useEffect(() => {
         setCurrentQuestion(0);
@@ -36,6 +42,9 @@ const Quiz = ({ onComplete, questions, category, isSpeedrun }) => {
 
         if (timeLeft > 0) {
             const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+            if (timeLeft <= 5) {
+                // Time's running out
+            }
             return () => clearTimeout(timer);
         } else {
             handleAnswer(null);
@@ -49,6 +58,8 @@ const Quiz = ({ onComplete, questions, category, isSpeedrun }) => {
         setSelectedOption(option);
         setIsCorrect(correct);
         setShowFeedback(true);
+
+
 
         const newAnswer = {
             question: currentQ.question,
@@ -85,11 +96,15 @@ const Quiz = ({ onComplete, questions, category, isSpeedrun }) => {
     };
 
     const finalizeQuiz = () => {
+
+        const endTime = Date.now();
+        const timeTaken = Math.floor((endTime - startTime) / 1000);
+
         // Calculate final score based on all answers (answered ones)
         // We filter out nulls to avoid crashes in Result component
         const answeredOnly = answers.filter(ans => ans !== null);
         const finalScore = answeredOnly.reduce((acc, ans) => (ans.isCorrect ? acc + 1 : acc), 0);
-        onComplete(finalScore, questions.length, answeredOnly);
+        onComplete(finalScore, questions.length, answeredOnly, timeTaken);
     };
 
     const progress = ((currentQuestion) / questions.length) * 100;
