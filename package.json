@@ -10,8 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.83.0",
     "canvas-confetti": "^1.9.4",
+    "firebase": "^12.10.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
