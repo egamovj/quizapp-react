@@ -50,8 +50,8 @@ const Result = ({ score, total, userAnswers, onRetry, onHome }) => {
                                 </div>
                                 <div className="log-details">
                                     <p>Q: {answer.question}</p>
-                                    {!answer.isCorrect && <p className="correction"> TASHQI MA'lumot: {answer.correct}</p>}
-                                    <p className="note"> Qo'shimcha ma'lumot: {answer.correct}</p>
+                                    {!answer.isCorrect && <p className="correction"> Sizning javobingiz: <span style={{color: 'var(--accent)'}}>{answer.selected || 'VAQT TUGADI'}</span></p>}
+                                    <p className="note"> To'g'ri javob: <span style={{color: 'var(--primary)'}}>{answer.correct}</span></p>
                                 </div>
                             </div>
                         ))}

@@ -227,8 +227,12 @@ const Review = ({ user, onBack, onStartReview }) => {
                                                     ❌ {wq.attempts}x
                                                 </span>
                                             </div>
-                                            <div style={{ color: 'var(--text-dim)', fontSize: '0.85rem' }}>
-                                                Last mistake: {new Date(wq.lastAttempt).toLocaleDateString()}
+                                            <div style={{ marginTop: '10px', padding: '10px', background: 'rgba(0, 255, 0, 0.05)', border: '1px solid rgba(0, 255, 0, 0.1)' }}>
+                                                <span style={{ color: 'var(--primary)', fontSize: '0.8rem', fontWeight: 'bold' }}>TO'G'RI JAVOB:</span>
+                                                <p style={{ margin: '5px 0 0 0', color: 'var(--primary)' }}>{wq.questionData.answer}</p>
+                                            </div>
+                                            <div style={{ color: 'var(--text-dim)', fontSize: '0.75rem', marginTop: '10px', textAlign: 'right' }}>
+                                                So'nggi xato: {new Date(wq.lastAttempt).toLocaleDateString()}
                                             </div>
                                         </div>
                                     ))}
