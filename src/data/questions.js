@@ -440,7 +440,7 @@ export const questions = {
     },
     {
       id: 27,
-      question: "Flex’da elementlarni to'liq markazlash uchun nima kerak?",
+      question: "Flex'da elementlarni to'liq markazlash uchun nima kerak?",
       options: [
         "justify ishlatiladi",
         "align ishlatiladi",
@@ -487,425 +487,486 @@ export const questions = {
   js: [
     {
       id: 1,
-      question: "JavaScriptda o'zgaruvchi nima?",
-      options: ["Funksiya", "Ma'lumot saqlovchi konteyner", "Operator", "Sikl"],
-      answer: "Ma'lumot saqlovchi konteyner",
+      question:
+        "DOM (Document Object Model) tushunchasiga berilgan eng to'g'ri ta'rifni ko'rsating:",
+      options: [
+        "Brauzer tomonidan HTML hujjatini tahlil qilishda yaratiladigan ob'ektlar ierarxiyasi",
+        "Faqatgina CSS stillarini boshqarish uchun ishlatiladigan JavaScript kutubxonasi",
+        "Server bilan ma'lumot almashish uchun ishlatiladigan maxsus protokollardan biri",
+        "HTML sahifasidagi matnlarni tahrirlash uchun ishlatiladigan API",
+      ],
+      answer:
+        "Brauzer tomonidan HTML hujjatini tahlil qilishda yaratiladigan ob'ektlar ierarxiyasi",
     },
     {
       id: 2,
       question:
-        "JavaScriptda o'zgaruvchini e'lon qilish uchun qaysi kalit so'zlar mavjud?",
+        "getElementsByClassName va querySelectorAll metodlari o'rtasidagi asosiy farq nimada?",
       options: [
-        "var, let, const",
-        "int, string, bool",
-        "define, set",
-        "new, this",
+        "getElementsByClassName doimiy yangilanib turuvchi HTMLCollection qaytaradi, querySelectorAll esa statik NodeList",
+        "querySelectorAll faqat bitta elementni qaytaradi, getElementsByClassName esa barcha elementlarni",
+        "getElementsByClassName CSS selektorlari bilan ishlaydi, querySelectorAll esa faqat klasslar bilan",
+        "Ularning o'rtasida hech qanday texnik farq mavjud emas",
       ],
-      answer: "var, let, const",
+      answer:
+        "getElementsByClassName doimiy yangilanib turuvchi HTMLCollection qaytaradi, querySelectorAll esa statik NodeList",
     },
     {
       id: 3,
-      question:
-        "Qaysi kalit so'z orqali e’lon qilingan o'zgaruvchining qiymatini o'zgartirib bo'lmaydi?",
-      options: ["var", "let", "const", "dynamic"],
-      answer: "const",
+      question: "document.querySelector('.box p') kodi qanday natija beradi?",
+      options: [
+        "Klassi 'box' bo'lgan element ichidagi barcha <p> teglarini qaytaradi",
+        "Klassi 'box' bo'lgan element ichidagi birinchi duch kelgan <p> tegini qaytaradi",
+        "Sahifadagi barcha '.box' va barcha 'p' elementlarini yig'adi",
+        "Agar element topilmasa, dastur xatolik berib to'xtaydi",
+      ],
+      answer:
+        "Klassi 'box' bo'lgan element ichidagi birinchi duch kelgan <p> tegini qaytaradi",
     },
     {
       id: 4,
-      question: "Quyidagi kod natijasi nima bo'ladi?\nconst x = 10;\nx = 20;",
-      options: ["20", "undefined", "x o'zgaradi", "xato (error)"],
-      answer: "xato (error)",
+      question: "document.getElementById metodi haqida qaysi mulohaza to'g'ri?",
+      options: [
+        "U bir nechta elementni topishi mumkin, agar ID'lar takrorlangan bo'lsa",
+        "U faqat document ob'ektida mavjud bo'lib, ma'lum bir element ichidan qidiruv o'tkazmaydi",
+        "U CSS selektorlarini (masalan, #id_name) qabul qiladi",
+        "Bu metod har doim HTMLCollection tipidagi ma'lumot qaytaradi",
+      ],
+      answer:
+        "U faqat document ob'ektida mavjud bo'lib, ma'lum bir element ichidan qidiruv o'tkazmaydi",
     },
     {
       id: 5,
       question:
-        "const bilan massiv e’lon qilinsa, massiv elementini o'zgartirish mumkinmi?",
-      options: ["yo'q", "faqat 1 marta", "ha", "faqat push bilan"],
-      answer: "ha",
+        "innerHTML va textContent xususiyatlari o'rtasidagi asosiy farq nimada?",
+      options: [
+        "innerHTML faqat matnni o'zgartiradi, textContent esa HTML teglar bilan ishlashga ruxsat beradi",
+        "innerHTML xavfsizlik nuqtai nazaridan xavfliroq, chunki u HTML kodini interpretatsiya qiladi",
+        "textContent matndagi bo'sh joylarni va CSS orqali yashirilgan matnlarni ko'rsatmaydi",
+        "innerHTML faqat o'qish uchun, textContent bilan qiymat yozish mumkin",
+      ],
+      answer:
+        "innerHTML xavfsizlik nuqtai nazaridan xavfliroq, chunki u HTML kodini interpretatsiya qiladi",
     },
     {
       id: 6,
-      question: "Hoisting hodisasi nima?",
+      question:
+        "Quyidagi kod bajarilganda nima sodir bo'ladi? element.innerText = '<b>Salom</b>'",
       options: [
-        "Kodni optimizatsiya qilish",
-        "O'zgaruvchini yuqoriga ko'tarish",
-        "Funksiyani o'chirish",
-        "Xotira tozalash",
+        "Sahifada 'Salom' so'zi qalin (bold) shriftda paydo bo'ladi",
+        "Sahifada so'zma-so'z '<b>Salom</b>' matni ko'rinadi, teglar ishlamaydi",
+        "Brauzer xatolik chiqaradi",
+        "Element ichidagi barcha kontent o'chib ketadi va hech narsa ko'rinmaydi",
       ],
-      answer: "O'zgaruvchini yuqoriga ko'tarish",
+      answer:
+        "Sahifada so'zma-so'z '<b>Salom</b>' matni ko'rinadi, teglar ishlamaydi",
     },
     {
       id: 7,
       question:
-        "Qaysi kalit so'z bilan e’lon qilinganda hoisting hodisasi sodir bo'ladi?",
-      options: ["let", "const", "var", "arrow"],
-      answer: "var",
+        "innerText va textContent ning ko'rinish (visibility) bo'yicha farqi nimada?",
+      options: [
+        "innerText CSS'dagi display: none bo'lgan elementlar matnini olmaydi, textContent esa oladi",
+        "textContent faqat foydalanuvchiga ko'rinib turgan matnni qaytaradi",
+        "Ikkala xususiyat ham CSS stillaridan qat'i nazar bir xil natija beradi",
+        "innerText matnni formatlashsiz qaytaradi, textContent esa formatlangan holda",
+      ],
+      answer:
+        "innerText CSS'dagi display: none bo'lgan elementlar matnini olmaydi, textContent esa oladi",
     },
     {
       id: 8,
       question:
-        "Quyidagi kod natijasi nima bo'ladi?\nconsole.log(a);\nvar a = 5;",
-      options: ["5", "undefined", "error", "null"],
-      answer: "undefined",
+        "JS orqali element.style.backgroundColor = 'red' kodi qayerga o'zgarish kiritadi?",
+      options: [
+        "Tashqi CSS faylidagi .red klassiga",
+        "HTML tegining bevosita style atributiga (inline style)",
+        "Sahifadagi barcha elementlarning fon rangiga",
+        "style tegi ichidagi umumiy qoidalarga",
+      ],
+      answer: "HTML tegining bevosita style atributiga (inline style)",
     },
     {
       id: 9,
-      question:
-        "Quyidagi kod natijasi nima bo'ladi?\nconsole.log(b);\nlet b = 5;",
-      options: ["5", "undefined", "error", "null"],
-      answer: "error",
+      question: "element.classList.toggle('active') metodining vazifasi nima?",
+      options: [
+        "Elementga 'active' klassini majburiy ravishda qo'shadi",
+        "Agar 'active' klassi bo'lsa uni o'chiradi, bo'lmasa qo'shadi",
+        "Elementning barcha klasslarini o'chirib, o'rniga 'active'ni yozadi",
+        "'active' klassi bor-yo'qligini tekshirib, true yoki false qaytaradi",
+      ],
+      answer: "Agar 'active' klassi bo'lsa uni o'chiradi, bo'lmasa qo'shadi",
     },
     {
       id: 10,
-      question: "Kalit so'zlarning qaysi biri ishlatishda tavsiya etiladi?",
-      options: ["hamma joyda var", "faqat var", "let va const", "faqat let"],
-      answer: "let va const",
+      question:
+        "Elementning hisoblangan (computed) stillarini olish uchun qaysi funksiya ishlatiladi?",
+      options: [
+        "element.getStyles()",
+        "window.getComputedStyle(element)",
+        "element.style.getPropertyValue()",
+        "document.css(element)",
+      ],
+      answer: "window.getComputedStyle(element)",
     },
     {
       id: 11,
-      question: "Qaysi holatda const ishlatish eng to'g'ri hisoblanadi?",
+      question:
+        "Yangi <div> yaratish va unga matn qo'shishning to'g'ri ketma-ketligi qaysi?",
       options: [
-        "qiymat o'zgaradigan bo'lsa",
-        "doimiy qiymat bo'lsa",
-        "sikl ichida",
-        "har doim",
+        "let d = createElement('div'); d.innerText = 'A';",
+        "let d = document.createElement('div'); d.textContent = 'A';",
+        "let d = new Div(); d.innerHTML = 'A';",
+        "let d = document.add('div'); d.text = 'A';",
       ],
-      answer: "doimiy qiymat bo'lsa",
+      answer: "let d = document.createElement('div'); d.textContent = 'A';",
     },
     {
       id: 12,
-      question: "JavaScriptda nechta asosiy primitive data type mavjud?",
-      options: ["5", "6", "7", "8"],
-      answer: "7",
+      question:
+        "element.append(newChild) va element.appendChild(newChild) o'rtasidagi farq nimada?",
+      options: [
+        "append bir nechta element yoki matn qo'shishi mumkin, appendChild faqat bitta Node ob'ektini",
+        "appendChild elementni boshiga qo'shadi, append esa oxiriga",
+        "append metodidan so'ng element qaytariladi, appendChild esa hech narsa",
+        "Ularning hech qanday farqi yo'q",
+      ],
+      answer:
+        "append bir nechta element yoki matn qo'shishi mumkin, appendChild faqat bitta Node ob'ektini",
     },
     {
       id: 13,
-      question: "Quyidagilardan qaysi biri primitive type'ga kiradi?",
-      options: ["object", "array", "function", "string"],
-      answer: "string",
+      question:
+        "DOM dan elementni butunlay o'chirib tashlash uchun qaysi metod eng zamonaviy?",
+      options: [
+        "element.remove()",
+        "element.delete()",
+        "element.parentElement.removeChild(element)",
+        "element.clear()",
+      ],
+      answer: "element.remove()",
     },
     {
       id: 14,
-      question: "JavaScriptda object bo'lmagan type qaysi?",
-      options: ["array", "function", "object", "number"],
-      answer: "number",
+      question:
+        "element.addEventListener('click', func) ning element.onclick = func dan afzalligi?",
+      options: [
+        "Bitta elementga bir xil turdagi bir nechta hodisa tinglovchilarini biriktirish imkonini beradi",
+        "Hodisalarni sekinroq ishlatish orqali xotirani tejaydi",
+        "Hodisani faqat bir marta ishlatishni kafolatlaydi",
+        "HTML kodining ichida to'g'ridan-to'g'ri yozish imkonini beradi",
+      ],
+      answer:
+        "Bitta elementga bir xil turdagi bir nechta hodisa tinglovchilarini biriktirish imkonini beradi",
     },
     {
       id: 15,
-      question: "Quyidagilardan qaysi biri string?",
-      options: ["123", "true", '"123"', "null"],
-      answer: '"123"',
+      question: "event.preventDefault() metodining vazifasi nima?",
+      options: [
+        "Hodisaning yuqori elementlarga tarqalishini (bubbling) to'xtatadi",
+        "Brauzerning element uchun standart amalini (masalan, link o'tishi) bekor qiladi",
+        "Hodisa tinglovchisini o'chirib tashlaydi",
+        "Hodisani darhol asinxron rejimga o'tkazadi",
+      ],
+      answer:
+        "Brauzerning element uchun standart amalini (masalan, link o'tishi) bekor qiladi",
     },
     {
       id: 16,
-      question: "Template literal qaysi belgida yoziladi?",
-      options: ["' '", '" "', "` `", "( )"],
-      answer: "` `",
+      question:
+        "Event Bubbling (Hodisaning ko'pirishi) tushunchasi nimani anglatadi?",
+      options: [
+        "Hodisa window elementidan boshlanib, maqsadli elementga qarab harakatlanadi",
+        "Hodisa maqsadli elementda sodir bo'lib, bosqichma-bosqich ota-onalariga uzatiladi",
+        "Bir vaqtning o'zida barcha elementlarda hodisa sodir bo'lishi",
+        "Hodisaning faqat bitta elementda qolib ketishi",
+      ],
+      answer:
+        "Hodisa maqsadli elementda sodir bo'lib, bosqichma-bosqich ota-onalariga uzatiladi",
     },
     {
       id: 17,
-      question: "JavaScriptda butun va kasr sonlar alohidami?",
-      options: ["ha", "yo'q", "faqat integer bor", "faqat float bor"],
-      answer: "yo'q",
+      question: "event.stopPropagation() metodi nima uchun xizmat qiladi?",
+      options: [
+        "Hodisaning brauzer xotirasidan o'chirilishini ta'minlaydi",
+        "Hodisaning DOM ierarxiyasi bo'ylab yuqoriga yoki pastga tarqalishini to'xtatadi",
+        "Tugmaning bosilishini asinxron qilish uchun ishlatiladi",
+        "Faol elementni o'zgartiradi",
+      ],
+      answer:
+        "Hodisaning DOM ierarxiyasi bo'ylab yuqoriga yoki pastga tarqalishini to'xtatadi",
     },
     {
       id: 18,
-      question: "NaN nimani bildiradi?",
-      options: ["nol", "xato", "number emas", "undefined"],
-      answer: "number emas",
+      question:
+        "addEventListener uchinchi parametri { capture: true } bo'lsa nima bo'ladi?",
+      options: [
+        "Hodisa Bubbling bosqichida ishlaydi",
+        "Hodisa Capturing (tutib olish) bosqichida, ya'ni tepadan pastga harakatda ishlaydi",
+        "Hodisa o'z-o'zidan bekor qilinadi",
+        "Bu xususiyat faqat mobil qurilmalarda ishlaydi",
+      ],
+      answer:
+        "Hodisa Capturing (tutib olish) bosqichida, ya'ni tepadan pastga harakatda ishlaydi",
     },
     {
       id: 19,
-      question: "Boolean type nechta qiymatga ega?",
-      options: ["1", "2", "3", "cheksiz"],
-      answer: "2",
+      question:
+        "localStorage va sessionStorage o'rtasidagi asosiy farq nimada?",
+      options: [
+        "localStorage ma'lumotlari brauzer yopilgandan keyin ham qoladi, sessionStorage tab yopilishi bilan o'chadi",
+        "localStorage faqat matnlarni saqlaydi, sessionStorage esa ob'ektlarni",
+        "sessionStorage xotira hajmi bo'yicha localStoragedan ancha kattaroqdir",
+        "localStorage ma'lumotlari serverga har bir so'rovda yuboriladi",
+      ],
+      answer:
+        "localStorage ma'lumotlari brauzer yopilgandan keyin ham qoladi, sessionStorage tab yopilishi bilan o'chadi",
     },
     {
       id: 20,
-      question: "Quyidagi ifoda natijasi nima?\nBoolean(0)",
-      options: ["true", "false", "null", "undefined"],
-      answer: "false",
+      question: "localStoragega ob'ektni saqlashning to'g'ri usuli qaysi?",
+      options: [
+        "localStorage.setItem('user', userObekt);",
+        "localStorage.setItem('user', JSON.stringify(userObekt));",
+        "localStorage.save(userObekt);",
+        "localStorage.setItem('user', userObekt.toString());",
+      ],
+      answer: "localStorage.setItem('user', JSON.stringify(userObekt));",
     },
     {
       id: 21,
-      question: "undefined nimani bildiradi?",
-      options: ["qiymat yo'q", "nol", "xato", "obyekt"],
-      answer: "qiymat yo'q",
+      question: "Cookies (kuki) larning asosiy xususiyati va maqsadi nima?",
+      options: [
+        "Faqat katta hajmdagi rasmlarni saqlash uchun ishlatiladi",
+        "Ma'lumotlar HTTP so'rovlari bilan serverga yuboriladi va amal qilish muddati bo'ladi",
+        "Ular faqat JavaScript yordamida o'qiladi, server ko'ra olmaydi",
+        "Brauzer keshini tozalash uchun ishlatiladigan maxsus fayllar",
+      ],
+      answer:
+        "Ma'lumotlar HTTP so'rovlari bilan serverga yuboriladi va amal qilish muddati bo'ladi",
     },
     {
       id: 22,
-      question: "null nima degani?",
-      options: ["xato", "qiymat berilmagan", "ataylab bo'sh qiymat", "nol"],
-      answer: "ataylab bo'sh qiymat",
+      question: "JSON.parse() metodining vazifasi nima?",
+      options: [
+        "JavaScript ob'ektini JSON formatidagi qatorga aylantirish",
+        "JSON formatidagi qatorni JavaScript ob'ektiga aylantirish",
+        "Ma'lumotlarni serverga yuborish uchun tayyorlash",
+        "JSON faylidagi xatolarni topish va tozalash",
+      ],
+      answer: "JSON formatidagi qatorni JavaScript ob'ektiga aylantirish",
     },
     {
       id: 23,
-      question: "Quyidagi kod natijasi nima?\nlet x;\nconsole.log(x);",
-      options: ["null", "error", "undefined", "0"],
-      answer: "undefined",
+      question:
+        "Nima uchun JSON formatida funksiyalar yoki undefined saqlash tavsiya etilmaydi?",
+      options: [
+        "Chunki JSON faqat ma'lumotlar tuzilishini qo'llab-quvvatlaydi; stringify ularni tashlab ketadi",
+        "Chunki funksiyalar JSON ichida juda ko'p joy egallaydi",
+        "JSON faqat sonlar bilan ishlash uchun yaratilgan",
+        "Funksiyalar brauzer xotirasini buzishi mumkin",
+      ],
+      answer:
+        "Chunki JSON faqat ma'lumotlar tuzilishini qo'llab-quvvatlaydi; stringify ularni tashlab ketadi",
     },
     {
       id: 24,
-      question: "typeof operatori nima qiladi?",
+      question: "HTTP protokoli doirasida 'Request' va 'Response' nima?",
       options: [
-        "qiymatni o'zgartiradi",
-        "turini aniqlaydi",
-        "solishtiradi",
-        "o'chiradi",
+        "Request – brauzerning serverdan ma'lumot so'rashi, Response – serverning qaytargan natijasi",
+        "Request – JS kodi ichidagi xatolik, Response – xatolikni tuzatish",
+        "Ikkalasi ham bir xil tushuncha bo'lib, keshda saqlashni bildiradi",
+        "Request – foydalanuvchi ma'lumoti, Response – ekran rasmi",
       ],
-      answer: "turini aniqlaydi",
+      answer:
+        "Request – brauzerning serverdan ma'lumot so'rashi, Response – serverning qaytargan natijasi",
     },
     {
       id: 25,
-      question: 'Quyidagi kod natijasi nima?\ntypeof "hello"',
-      options: ["string", "text", "object", "undefined"],
-      answer: "string",
+      question:
+        "HTTP metodlari orasidagi POST va GET ning asosiy farqi nimada?",
+      options: [
+        "GET ma'lumotlarni olish uchun, POST esa yangi ma'lumot yuborish (yaratish) uchun",
+        "POST so'rovlari URL manzilida barcha ma'lumotlarni ko'rsatib yuboradi",
+        "GET so'rovining tana qismi (body) bo'ladi, POSTda esa bo'lmaydi",
+        "GET xavfsizroq metod hisoblanadi",
+      ],
+      answer:
+        "GET ma'lumotlarni olish uchun, POST esa yangi ma'lumot yuborish (yaratish) uchun",
     },
     {
       id: 26,
-      question: "Object qanday qavs bilan yaratiladi?",
-      options: ["[]", "()", "{}", "<>"],
-      answer: "{}",
+      question: "HTTP 404 status kodi nimani anglatadi?",
+      options: [
+        "Serverda ichki xatolik yuz berdi",
+        "So'ralgan resurs topilmadi (Not Found)",
+        "So'rov muvaffaqiyatli bajarildi (OK)",
+        "Foydalanuvchi tizimga kirmagan",
+      ],
+      answer: "So'ralgan resurs topilmadi (Not Found)",
     },
     {
       id: 27,
-      question: "Symbol ma’lumot turi nima uchun ishlatilinadi?",
+      question: "PUT metodi nima uchun ishlatiladi?",
       options: [
-        "matn saqlash",
-        "noyob qiymat yaratish",
-        "son saqlash",
-        "massiv yaratish",
+        "Mavjud ma'lumotni butunlay yangilash (almashtirish) uchun",
+        "Ma'lumotni o'chirib tashlash uchun",
+        "Faqatgina ma'lumotning bir qismini o'zgartirish uchun",
+        "Yangilangan keshni tozalash uchun",
       ],
-      answer: "noyob qiymat yaratish",
+      answer: "Mavjud ma'lumotni butunlay yangilash (almashtirish) uchun",
     },
     {
       id: 28,
-      question: "Quyidagi kod natijasi nima?\ntypeof []",
-      options: ["array", "object", "list", "undefined"],
-      answer: "object",
+      question:
+        "JavaScript nega 'Single-threaded' (bir oqimli) til deb ataladi?",
+      options: [
+        "Chunki u bir vaqtning o'zida faqat bitta amalni bajara oladi",
+        "Chunki u faqat bitta kompyuterda ishlay oladi",
+        "Chunki unda asinxron kod yozib bo'lmaydi",
+        "Chunki u faqat bitta HTML fayliga ulanadi",
+      ],
+      answer: "Chunki u bir vaqtning o'zida faqat bitta amalni bajara oladi",
     },
     {
       id: 29,
-      question: "Quyidagi kod natijasi nima?\ntypeof function(){}",
-      options: ["function", "object", "method", "undefined"],
-      answer: "function",
+      question: "Promise (Vada) ob'ektining uchta holati (state) qaysilar?",
+      options: [
+        "Start, Middle, End",
+        "Pending (kutilmoqda), Fulfilled (bajarildi), Rejected (rad etildi)",
+        "True, False, Null",
+        "Loading, Success, Error",
+      ],
+      answer:
+        "Pending (kutilmoqda), Fulfilled (bajarildi), Rejected (rad etildi)",
     },
     {
       id: 30,
-      question: 'Quyidagi kod natijasi nima?\n"5" + 2',
-      options: ["7", "52", "error", "NaN"],
-      answer: "52",
+      question: "Promise.then() metodi nima uchun ishlatiladi?",
+      options: [
+        "Xatoliklarni ushlab qolish uchun",
+        "Promise muvaffaqiyatli yakunlanganda bajariladigan funksiyani aniqlash uchun",
+        "Promiseni darhol to'xtatish uchun",
+        "Promiseni o'chiradi",
+      ],
+      answer:
+        "Promise muvaffaqiyatli yakunlanganda bajariladigan funksiyani aniqlash uchun",
     },
     {
       id: 31,
-      question: 'Quyidagi kod natijasi nima?\n"5" - 2',
-      options: ["3", "52", "error", "NaN"],
-      answer: "3",
+      question: "fetch() funksiyasi qaytaradigan birinchi natija nima bo'ladi?",
+      options: [
+        "Tayyor JSON ma'lumotlari massivi",
+        "Response ob'ekti, undan keyin .json() metodini chaqirish kerak",
+        "HTML kodlari to'plami",
+        "Xatolik matni",
+      ],
+      answer: "Response ob'ekti, undan keyin .json() metodini chaqirish kerak",
     },
     {
       id: 32,
-      question: "Qoldiqni qaytaruvchi operator qaysi?",
-      options: ["/", "%", "*", "**"],
-      answer: "%",
+      question: "async/await texnologiyasining asosiy maqsadi nima?",
+      options: [
+        "JavaScriptni ko'p oqimli tilga aylantirish",
+        "Asinxron kodni xuddi sinxron kod kabi o'qishli yozish imkonini berish",
+        "Barcha operatsiyalarni darhol to'xtatib, serverni kutish",
+        "Faqat CSS animatsiyalarni boshqarish",
+      ],
+      answer:
+        "Asinxron kodni xuddi sinxron kod kabi o'qishli yozish imkonini berish",
     },
     {
       id: 33,
-      question: "Qaysi operator faqat qiymatni tekshiradi?",
-      options: ["=", "===", "==", "!="],
-      answer: "==",
+      question: "await kalit so'zi qayerda ishlatilishi mumkin?",
+      options: [
+        "Har qanday funksiya ichida",
+        "Faqat async deb e'lon qilingan funksiyalar ichida",
+        "Faqat if-else shartlari ichida",
+        "Uni ishlatish majburiy emas",
+      ],
+      answer: "Faqat async deb e'lon qilingan funksiyalar ichida",
     },
     {
       id: 34,
-      question: 'Quyidagi kod natijasi nima?\n5 == "5"',
-      options: ["true", "false", "error", "undefined"],
-      answer: "true",
+      question:
+        "async/await ishlatilganda xatoliklarni qanday ushlash tavsiya etiladi?",
+      options: [
+        ".then() va .catch() zanjiri orqali",
+        "try { ... } catch (error) { ... } bloklari yordamida",
+        "if (error) { ... } sharti yordamida",
+        "Xatoliklarni ushlashning imkoni yo'q",
+      ],
+      answer: "try { ... } catch (error) { ... } bloklari yordamida",
     },
     {
       id: 35,
-      question: "Quyidagilardan qaysi biri mantiqiy AND operatori?",
-      options: ["||", "&&", "!", "??"],
-      answer: "&&",
+      question: "Promise.all([p1, p2, p3]) metodi qachon natija qaytaradi?",
+      options: [
+        "Massivdagi barcha promislar muvaffaqiyatli bajarilganda",
+        "Massivdagi kamida bitta promise bajarilganda",
+        "Faol element o'zgarganda",
+        "Ixtiyoriy ravishda 2 soniyadan keyin",
+      ],
+      answer: "Massivdagi barcha promislar muvaffaqiyatli bajarilganda",
     },
     {
       id: 36,
-      question: "Quyidagi kod natijasi nima?\ntrue && false",
-      options: ["true", "false", "null", "undefined"],
-      answer: "false",
+      question: "API (Application Programming Interface) nima?",
+      options: [
+        "Bu ma'lumotlar bazasining nomi",
+        "Ikki xil dasturning bir-biri bilan muloqot qilishi uchun qoidalar to'plami",
+        "Brauzerning kod muharriri",
+        "Kompyuterning operatsion tizimi",
+      ],
+      answer:
+        "Ikki xil dasturning bir-biri bilan muloqot qilishi uchun qoidalar to'plami",
     },
     {
       id: 37,
-      question: 'Quyidagi kod natijasi nima?\n0 && "hello"',
-      options: ['"hello"', "true", "0", "false"],
-      answer: "0",
+      question:
+        "fetch('url', { method: 'POST', body: JSON.stringify(data) }) nima qiladi?",
+      options: [
+        "URL manzilidan ma'lumotlarni o'chiradi",
+        "Ko'rsatilgan URL'ga JSON formatidagi ma'lumotlarni yuboradi",
+        "Faqatgina URL'ga ulanishni tekshiradi",
+        "Ma'lumotlarni keshga saqlaydi",
+      ],
+      answer: "Ko'rsatilgan URL'ga JSON formatidagi ma'lumotlarni yuboradi",
     },
     {
       id: 38,
-      question: "Quyidagi kod natijasi nima?\nlet x = 5;\nx += 3;",
-      options: ["3", "5", "8", "error"],
-      answer: "8",
+      question:
+        "Callback Hell (Kollbek jahannami) muammosi nima bilan hal qilinadi?",
+      options: [
+        "Ko'proq if shartlari orqali",
+        "Promises va Async/Await texnologiyalari orqali",
+        "HTML fayllarini ko'paytirish orqali",
+        "Sikllarni kamaytirish orqali",
+      ],
+      answer: "Promises va Async/Await texnologiyalari orqali",
     },
     {
       id: 39,
-      question: "Quyidagilardan qaysi biri falsy qiymat?",
-      options: ['"0"', "[]", "{}", "0"],
-      answer: "0",
+      question: "response.json() metodi nima qaytaradi?",
+      options: [
+        "Tayyor JS ob'ektini (lekin u ham Promise bo'ladi)",
+        "Matn formatidagi ma'lumotni",
+        "Binary (ikkilik) ma'lumotlarni",
+        "Faqat status kodini",
+      ],
+      answer: "Tayyor JS ob'ektini (lekin u ham Promise bo'ladi)",
     },
     {
       id: 40,
-      question:
-        'Quyidagi kod natijasi nima?\nif ("hello") { console.log("OK"); }',
-      options: ["hech narsa", "error", "OK", "false"],
-      answer: "OK",
-    },
-    {
-      id: 41,
-      question: "if operatori nima uchun ishlatiladi?",
-      options: ["sikl", "shart tekshirish", "funksiya", "massiv"],
-      answer: "shart tekshirish",
-    },
-    {
-      id: 42,
-      question: "if uchun qaysi sintaksis to'g'ri?",
-      options: ["if x > 5", "if (x > 5)", "if x > 5 then", "if {x > 5}"],
-      answer: "if (x > 5)",
-    },
-    {
-      id: 43,
-      question: "Bir nechta shartni tekshirish uchun qaysi ishlatiladi?",
-      options: ["else", "else if", "switch", "while"],
-      answer: "else if",
-    },
-    {
-      id: 44,
-      question: "switch asosan nima uchun ishlatiladi?",
-      options: ["sikl", "ko'p if yozmaslik", "massiv", "funksiya"],
-      answer: "ko'p if yozmaslik",
-    },
-    {
-      id: 45,
-      question: "switch'da break operatori bo'lmasa nima bo'ladi?",
+      question: "Nima uchun asinxron dasturlash JSda juda muhim?",
       options: [
-        "xato",
-        "faqat 1 case",
-        "keyingi case’lar ham bajariladi",
-        "to'xtaydi",
+        "Chunki JS o'yinlar yaratish uchun mo'ljallangan",
+        "Uzoq davom etadigan amallar vaqtida interfeys qotib qolmasligi uchun",
+        "Chunki u faqat bitta faylda ishlashga ruxsat beradi",
+        "Foydalanuvchidan parollarni yashirish uchun",
       ],
-      answer: "keyingi case’lar ham bajariladi",
-    },
-    {
-      id: 46,
-      question: "Sikllar nima uchun ishlatiladi?",
-      options: ["shart", "takrorlash", "funksiya", "object"],
-      answer: "takrorlash",
-    },
-    {
-      id: 47,
-      question: "Shart asosida ishlaydigan sikllar qaysi?",
-      options: ["for", "while", "do…while", "hammasi"],
-      answer: "hammasi",
-    },
-    {
-      id: 48,
-      question: "for siklining to'g'ri sintaksisi qaysi?",
-      options: ["for i = 0", "for (let i=0; i<5; i++)", "for i < 5", "loop(i)"],
-      answer: "for (let i=0; i<5; i++)",
-    },
-    {
-      id: 49,
-      question: "do…while siklining farqi nimada?",
-      options: [
-        "tezroq",
-        "kamida 1 marta bajariladi",
-        "faqat boolean",
-        "for o'rnida",
-      ],
-      answer: "kamida 1 marta bajariladi",
-    },
-    {
-      id: 50,
-      question: "break operatori nima qiladi?",
-      options: ["qayta boshlaydi", "to'xtatadi", "faqat if", "xato"],
-      answer: "to'xtatadi",
-    },
-    {
-      id: 51,
-      question: "continue operatori nima qiladi?",
-      options: [
-        "to'xtatadi",
-        "boshidan boshlaydi",
-        "joriy iteratsiyani o'tkazadi",
-        "sekinlashtiradi",
-      ],
-      answer: "joriy iteratsiyani o'tkazadi",
-    },
-    {
-      id: 52,
-      question: "Funksiya nima?",
-      options: ["data type", "qayta ishlatiladigan kod", "shart", "sikl"],
-      answer: "qayta ishlatiladigan kod",
-    },
-    {
-      id: 53,
-      question: "Funksiya e’lon qilish kalit so'zi qaysi?",
-      options: ["def", "func", "function", "method"],
-      answer: "function",
-    },
-    {
-      id: 54,
-      question: "Qaysi biri function expression?",
-      options: [
-        "function test(){}",
-        "let test = function(){}",
-        "if(){}",
-        "for(){}",
-      ],
-      answer: "let test = function(){}",
-    },
-    {
-      id: 55,
-      question: "Function expression hoisting qilinadimi?",
-      options: ["ha", "yo'q", "faqat var", "har doim"],
-      answer: "yo'q",
-    },
-    {
-      id: 56,
-      question: "Massiv nima?",
-      options: [
-        "bitta qiymat",
-        "bir xil tur",
-        "tartibli qiymatlar to'plami",
-        "faqat number",
-      ],
-      answer: "tartibli qiymatlar to'plami",
-    },
-    {
-      id: 57,
-      question: "map va forEach farqi nimada?",
-      options: [
-        "map tezroq",
-        "forEach qaytaradi",
-        "map yangi array qaytaradi",
-        "farqi yo'q",
-      ],
-      answer: "map yangi array qaytaradi",
-    },
-    {
-      id: 58,
-      question: "JavaScript single-threaded degani nima?",
-      options: ["1 funksiya", "1 call stack", "async yo'q", "DOM yo'q"],
-      answer: "1 call stack",
-    },
-    {
-      id: 59,
-      question: "Temporal Dead Zone qachon yuz beradi?",
-      options: ["var", "let/const oldin murojaat", "funksiya", "global"],
-      answer: "let/const oldin murojaat",
-    },
-    {
-      id: 60,
-      question: "reduce natijasi nima?\n[1,2,3].reduce((a,b)=>a+b)",
-      options: ["6", "5", "error", "undefined"],
-      answer: "6",
+      answer:
+        "Uzoq davom etadigan amallar vaqtida interfeys qotib qolmasligi uchun",
     },
   ],
 };
